@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="buyiCompanyProduct">
+    <typeAlias alias="byComanyProduct" type="com.buyi.dal.entity.dataobject.CompanyProductDO" />
+    <resultMap id="byComanyProductResult" class="byComanyProduct">
+		<result column="id"                   property="id"                     javaType="java.lang.Long" />
+		<result column="company_id"           property="companyId"              javaType="java.lang.Long" />
+		<result column="product_type_id"      property="productTypeId"          javaType="java.lang.Long" />
+		<result column="product_name"         property="productName"            javaType="java.lang.String" />
+		<result column="product_pic"          property="productPic"             javaType="java.lang.String" />
+		<result column="product_info"         property="productInfo"            javaType="java.lang.String" />
+		<result column="product_price"        property="productPrice"           javaType="java.lang.String" />
+		<result column="product_num"          property="productNum"             javaType="java.lang.String" />
+		<result column="gmt_create"           property="gmtCreate"              javaType="java.util.Date" />
+		<result column="gmt_modified"         property="gmtModified"            javaType="java.util.Date" />
+	</resultMap>
+	
+    <select id="QUERY-COMPANY-PRODUCT-BY-TYPE-ID" parameterClass="map" resultMap="byComanyProductResult">
+	<![CDATA[ 
+	   select 
+	       id,
+	       company_id,
+	       product_type_id,
+	       product_pic,
+	       product_name,
+	       product_info,
+	       product_price,
+	       product_num,
+	       gmt_create,
+	       gmt_modified
+	   from
+	       company_product
+	   where
+	       product_type_id = #productTypeId#
+	   order by gmt_create desc,id desc
+	   limit #startRow#, #pageSize#
+	   ]]>
+	</select>
+	
+    <insert id="INSERT-COMPANY-PRODUCT" parameterClass="byComanyProduct">
+        <![CDATA[ 
+		insert into company_product (
+			company_id,
+			product_type_id,
+			product_pic,
+			product_name,
+			product_info,
+			product_price,
+			product_num,
+			gmt_create,
+			gmt_modified
+		) values (
+			#companyId#,
+			#productTypeId#,
+			#productPic#,
+			#productName#,
+			#productInfo#,
+			#productPrice#,
+			#productNum#,
+			now(),
+			now()
+		)
+	]]>
+	<selectKey resultClass="long" keyProperty="id" type="post">
+   		select last_insert_id();
+    </selectKey>
+    </insert>
+</sqlMap>

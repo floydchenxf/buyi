@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%p [%t] %c{1}.%M(%L) | %m%n" />
+		</layout>
+	</appender>
+	<appender name="PROJECT" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${log.savepath}/joke.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="GBK" />
+		<param name="threshold" value="info"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n" />
+		</layout>
+	</appender>
+
+	<logger name="net.sf.ehcache">
+		<level value="${log.level}" />
+	</logger>
+
+	<logger name="org.springframework.security">
+		<level value="${log.level}" />
+	</logger>
+
+	<logger name="org.apache.velocity">
+		<level value="${log.level}" />
+	</logger>
+
+	<logger name="org.apache">
+		<level value="${log.level}" />
+	</logger>
+
+	<logger name="com.ibatis">
+		<level value="${log.level}" />
+	</logger>
+	<logger name="com.ibatis.common.jdbc.SimpleDataSource">
+		<level value="${log.level}" />
+	</logger>
+	<logger name="com.ibatis.common.jdbc.ScriptRunner">
+		<level value="${log.level}" />
+	</logger>
+	<logger name="com.ibatis.common.jdbc.SqlMapClientDelegate">
+		<level value="${log.level}" />
+	</logger>
+	<logger name="java.sql.Connection">
+		<level value="${log.level}" />
+	</logger>
+	<logger name="java.sql.Statement">
+		<level value="${log.level}" />
+	</logger>
+	<logger name="java.sql.PreparedStatement">
+		<level value="${log.level}" />
+	</logger>
+	<logger name="java.sql.ResultSet">
+		<level value="${log.level}" />
+	</logger>
+
+	<logger name="org.hibernate.validator">
+		<level value="${log.level}" />
+	</logger>
+
+	<logger name="org.springframework">
+		<level value="INFO" />
+	</logger>
+
+	<root>
+		<level value="${log.level}" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="PROJECT" />
+	</root>
+
+</log4j:configuration>

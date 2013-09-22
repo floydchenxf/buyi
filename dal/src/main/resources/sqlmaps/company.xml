@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="buyiCompany">
+	<typeAlias alias="byComany" type="com.buyi.dal.entity.dataobject.CompanyDO" />
+	<typeAlias alias="companyVO" type="com.buyi.dal.entity.viewobject.CompanyVO" />
+	<resultMap id="byCompanyResult" class="byComany">
+		<result column="id"                   property="id"                     javaType="java.lang.Long" />
+		<result column="company_pic"          property="companyPic"             javaType="java.lang.String" />
+		<result column="company_info"         property="companyInfo"            javaType="java.lang.String" />
+		<result column="company_address"      property="companyAddress"         javaType="java.lang.String" />
+		<result column="company_phone"        property="companyPhone"           javaType="java.lang.String" />
+		<result column="company_contract"     property="contractId"             javaType="java.lang.Long" />
+		<result column="gmt_create"           property="gmtCreate"              javaType="java.util.Date" />
+		<result column="gmt_modified"         property="gmtModified"            javaType="java.util.Date" />
+	</resultMap>
+	
+	<resultMap id="companyVOResult" class="companyVO">
+		<result column="id"                   property="id"                     javaType="java.lang.Long" />
+		<result column="company_pic"          property="companyPic"             javaType="java.lang.String" />
+		<result column="company_info"         property="companyInfo"            javaType="java.lang.String" />
+		<result column="company_address"      property="companyAddress"         javaType="java.lang.String" />
+		<result column="company_phone"        property="companyPhone"           javaType="java.lang.String" />
+		<result column="company_contract"     property="companyContract"        javaType="java.lang.String" />
+	</resultMap>
+	
+	<select id="LOAD-COMPANY-BY-ID" parameterClass="long" resultMap="byCompanyResult">
+	<![CDATA[ 
+	   select 
+	       id,
+	       company_pic,
+	       company_info,
+	       company_address,
+	       company_phone,
+	       company_contract,
+	       gmt_create,
+	       gmt_modified
+	   from
+	       company
+	   where
+	       id = #id#
+	   ]]>
+	</select>
+	
+	<select id="LOAD-COMPANY-VO-BY-ID" parameterClass="long" resultMap="companyVOResult">
+	<![CDATA[ 
+	   select 
+	       c.id,
+	       c.company_pic,
+	       c.company_info,
+	       c.company_address,
+	       c.company_phone,
+	       u.n_name as company_contract
+	   from
+	       company c inner join user u on (c.company_contract = u.id)
+	   where
+	       c.id = #id#
+	   ]]>
+	</select>
+</sqlMap>

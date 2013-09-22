@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="jkUser">
+	<typeAlias alias="jkUser" type="com.buyi.dal.entity.dataobject.UserDO" />
+	<typeAlias alias="roleType" type="com.buyi.dal.entity.viewobject.RoleType" />
+	<resultMap id="jkUserResult" class="jkUser">
+		<result column="id"                   property="id"                     javaType="java.lang.Long" />
+		<result column="u_name"               property="realName"               javaType="java.lang.String" />
+		<result column="n_name"               property="nickName"               javaType="java.lang.String" />
+		<result column="u_pwd"                property="pwd"                    jdbcType="java.lang.String" />
+		<result column="u_avatar_img"         property="profileImage"           jdbcType="java.lang.String" />
+		<result column="u_role_type"            property="roleType"               jdbcType="roleType" />
+		<result column="last_online"          property="lastOnlineTime"         javaType="java.util.Date" />
+	</resultMap>
+	
+	<insert id="INSERT-USER" parameterClass="jkUser">
+	<![CDATA[ 
+		insert into user (
+			u_name,
+			n_name,
+			u_pwd,
+			u_role_type,
+			u_avatar_img,
+			last_online
+		) values (
+			#realName#,
+			#nickName#,
+			#pwd#,
+			#roleType#,
+			#profileImage#,
+			now()
+		)
+	]]>
+	<selectKey resultClass="long" keyProperty="id" type="post">
+   		select last_insert_id();
+    </selectKey>
+	</insert>
+	
+	<update id="UPDATE-USER" parameterClass="jkUser">
+		<![CDATA[ 
+			update user set gmt_modified = now()
+		]]>
+		<isNotEmpty property="realName" prepend=",">
+			u_name = #realName#
+		</isNotEmpty>
+		<isNotEmpty property="nickName" prepend=",">
+			n_name = #nickName#
+		</isNotEmpty>
+		<isNotEmpty property="pwd" prepend=",">
+			u_pwd = #pwd#
+		</isNotEmpty>
+		<![CDATA[ 
+			where id = #id#
+		]]>
+	</update>
+	
+	<select id="LOAD-USER-BY-ID" parameterClass="long" resultMap="jkUserResult">
+	<![CDATA[ 
+	   select 
+	       id,
+	       u_name,
+	       n_name,
+	       u_pwd,
+	       u_role_type,
+	       u_avatar_img,
+	       u_role_type,
+	       last_online
+	   from
+	       user
+	   where
+	       id = #id#
+	   ]]>
+	</select>
+	<select id="QUERY-USER-BY-NAME" parameterClass="string" resultMap="jkUserResult">
+	<![CDATA[ 
+	   select 
+	       id,
+	       u_name,
+	       n_name,
+	       u_pwd,
+	       u_role_type,
+	       u_avatar_img,
+	       last_online
+	   from
+	       user
+	   where
+	       u_name = #username#
+	   limit 1
+	   ]]>
+	</select>
+	
+	<select id="QUERY_USER_BY_MEMBERIDS" parameterClass="java.util.List"  resultMap="jkUserResult">
+		<![CDATA[ 
+		select  
+		   id,
+	       u_name,
+	       n_name,
+	       u_pwd,
+	       u_role_type,
+	       u_avatar_img,
+	       u_role_type,
+	       last_online
+		from 
+			user
+		where 
+			id IN 
+		 ]]>
+		<iterate open="(" close=")" conjunction=","> 
+			#ids[]#
+		</iterate>
+		<![CDATA[ 
+		 order by id asc
+		 ]]>
+	</select>
+</sqlMap>

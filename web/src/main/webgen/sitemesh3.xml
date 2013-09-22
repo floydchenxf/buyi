@@ -1,0 +1,25 @@
+<sitemesh>
+	<content-processor>
+		<tag-rule-bundle
+			class="org.sitemesh.content.tagrules.template.AsyncTemplateTagRuleBundle" />
+	</content-processor>
+
+	<mapping path="/_widget/*">
+	</mapping>
+	<mapping path="/wx/*">
+	</mapping>
+
+	<mapping path="/**/*_inline.vm">
+		<decorator>/_decorators/default_inline.wvm</decorator>
+	</mapping>
+	
+	<mapping path="/root.txt">
+		<decorator>/_decorators/default_inline.wvm</decorator>
+	</mapping>
+
+	<mapping>
+		<decorator>/_decorators/content/header.wvm</decorator>
+		<decorator>/_decorators/frame.wvm</decorator>
+		<decorator>/_decorators/default.wvm</decorator>
+	</mapping>
+</sitemesh>

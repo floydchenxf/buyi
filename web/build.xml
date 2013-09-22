@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<project name="Sitemesh Offline Decoration" default="decorate" basedir=".">
+
+	<target name="decorate" description="decorate velocity templates">
+		<property name="project.build.directory" value="target" />
+		<path id="plugin_classpath">
+			<!-- TODO assume maven repo dir at: c:/repo -->
+			<fileset dir="c:/repo/com/in4/in4tool-sitemesh">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="c:/repo/org/sitemesh/sitemesh">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="c:/repo/commons-io/commons-io">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+		<taskdef name="sitemesh" classname="org.sitemesh.ant.SiteMeshTaskEx" classpathref="plugin_classpath" />
+
+		<!-- decoration -->
+		<sitemesh destdir="${project.build.directory}/webgen.templated/WEB-INF/template" config="src/main/webgen/sitemesh3.xml" encoding="UTF-8">
+			<sitemeshfileset dir="src/main/webgen/template">
+				<exclude name="**/*.wvm" />
+				<include name="**/*.vm" />
+			</sitemeshfileset>
+		</sitemesh>
+		<!-- prepare for a compiled resource -->
+		<copy todir="${project.build.directory}/webgen.templated" preservelastmodified="true">
+			<fileset dir="src/main/webapp" />
+		</copy>
+	</target>
+</project>

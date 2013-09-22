@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<tools>
+	<data key="STRUTS_TOOLS_AVAILABLE">false</data>
+	<toolbox scope="application">
+		<tool key="validatorTool" class="org.apache.velocity.tools.generic.ValidatorTool"
+			validator_key.prefix="v_" />
+		<tool key="displayTool" class="org.apache.velocity.tools.generic.DisplayTool" />
+		<tool key="escTool" class="org.apache.velocity.tools.generic.EscapeTool" />
+		<tool key="dateTool" class="org.apache.velocity.tools.generic.DateTool" />
+		<tool key="classTool" class="org.apache.velocity.tools.generic.ClassTool" />
+		<tool key="mathTool" class="org.apache.velocity.tools.generic.MathTool" />
+		<tool key="noescStringTool" class="com.buyi.util.StringTool" />
+	</toolbox>
+	<toolbox scope="request">
+		<tool key="beanTool" class="org.apache.velocity.tools.view.SpringBeanTool" config-file="/WEB-INF/springbean-tool.properties" />
+		<tool key="urlUtil" class="com.buyi.util.UrlUtil" />
+		<tool key="securityTool" class="com.buyi.webapp.tools.SecurityTool" />
+		<tool key="userInfoTool" class="com.buyi.webapp.tools.UserInfoTool" />
+	</toolbox>
+</tools>

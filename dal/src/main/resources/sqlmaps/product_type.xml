@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="buyiProductType">
+    <typeAlias alias="byProductTypeDO" type="com.buyi.dal.entity.dataobject.ProductTypeDO" />
+	<resultMap id="byProductTypeResult" class="byProductTypeDO">
+		<result column="id"                  property="id"                     javaType="java.lang.Long" />
+		<result column="company_id"          property="companyId"              javaType="java.lang.Long" />
+		<result column="type_pic"            property="typePic"                javaType="java.lang.String" />
+		<result column="type_name"           property="typeName"               javaType="java.lang.String" />
+		<result column="gmt_create"          property="gmtCreate"              javaType="java.util.Date" />
+		<result column="gmt_modified"        property="gmtModified"            javaType="java.util.Date" />
+	</resultMap>
+	
+	<select id="QUERY-PRODUCT-TYPE-BY-COMPANY-ID" parameterClass="long" resultMap="byProductTypeResult">
+	<![CDATA[ 
+	   select 
+	       id,
+	       company_id,
+	       type_pic,
+	       type_name,
+	       gmt_create,
+	       gmt_modified
+	   from
+	       company_product_type
+	   where
+	       company_id = #companyId#
+	   order by
+	       gmt_create desc,id desc
+	   limit 0,12
+	   ]]>
+	</select>
+</sqlMap>

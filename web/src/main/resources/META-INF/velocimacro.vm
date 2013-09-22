@@ -1,0 +1,245 @@
+#**
+ * @see org/springframework/web/servlet/view/velocity/spring.vm
+ * @author Ju
+ * #
+
+ #**
+  *
+  * @param $groups validation groups.
+  * @param $valTool see org.apache.velocity.tools.generic.ValidatorTool.
+  *#
+#macro( validatorKeys $groups $valTool)
+#if($valTool)
+	#set($bvalTool = $valTool)
+#else
+	#set($bvalTool = $validatorTool)
+#end
+#set($validatorKeys = $bvalTool.validatorKeys($status.path, $springMacroRequestContext.model, $groups))
+#foreach($noesckey in $validatorKeys)#set($noesckey = "$noesckey ")$noesckey#end
+#end
+
+#macro(widget, $handler, $param1, $param2, $param3, $param4, $param5, $param6, $param7, $param8)
+#set($template = ${beanTool.invoke($handler, $param1, $param2, $param3, $param4, $param5, $param6, $param7, $param8)})
+#if($template)#parse("${template}.vm")#end
+#end
+
+#macro(resourceDetail $resourceId)$urlUtil.DETAIL_ITEM_RESOURCE.pm('id',$resourceId).pm('invite_code',$securityTool.me.invitationCode)
+#end
+#**
+ * 为本页面的url增加序号参数，作为用户行为统计的标示。
+ *#
+#macro(sudaUrl $relativeUrl)$springMacroRequestContext.getContextPath()${relativeUrl}#if($relativeUrl.indexOf('?')<0)?#else&#{end}_serial=#requestSerial()#end
+
+#**
+ *在request的scope内，获取一个从1开始的值，每调用一次自增1。
+ *#
+#macro(requestSerial)
+#set($requestSerial=$request.getAttribute('^requestSerial$'))
+#if(!$requestSerial)
+#set($requestSerial=1)
+#else
+#set($requestSerial=$requestSerial+1)
+#end
+$request.setAttribute('^requestSerial$',$requestSerial)$requestSerial
+#end
+
+
+#**
+ * 生成真实的头像url. TODO 默认头像的性别
+ * @param user user对象
+ * @param size 显示的尺寸，  small：小尺寸；tiny：微尺寸；large: 大尺寸；其他：normal尺寸
+ * @see com.hisuda.util.Constants.IMG_PATH_PREFIX_AVATAR
+ *#
+#macro(userAvatar $user $size)#if(!$size)#set($size="normal")#end#if($user.uid)#set($picSize=50)#if($size.equals('tiny'))#set($picSize=30)#elseif($size.equals('small'))#set($picSize=50)#elseif($size.equals('large'))#set($picSize=180)#end#if($user.gotTempAvatar())$user.gotTempAvatar($picSize)#{else}$stringTool.imgServer()/img/avatar/default-male.png#if($size)!${size}.jpg#end#end#else$stringTool.imgServer()#if($user && $stringTool.isNotBlank(${user.avatar}))${user.avatar}#{else}/img/avatar/default-#if($user && ${user.female})female#{else}male#{end}.png#end#if($size)!${size}.jpg#end#end#end
+
+#**
+ * springFormInput
+ *
+ * Display a form input field of type 'text' and bind it to an attribute
+ * of a command or bean.
+ *
+ * @param path the name of the field to bind to
+ * @param attributes any additional attributes for the element (such as class
+ *    or CSS styles or size
+ *
+ *#
+#macro( springFormInputEx $path $attributes )
+    #springBind($path)
+    <input type="text" id="${status.expression}" name="${status.expression}" value="$!status.value" ${attributes} #validatorKeys() #springCloseTag()
+#end
+
+#**
+ * springFormPasswordInput
+ *
+ * Display a form input field of type 'password' and bind it to an attribute
+ * of a command or bean.  No value will ever be specified for this field regardless
+ * of whether one exists or not.  For hopefully obvious reasons!
+ *
+ * @param path the name of the field to bind to
+ * @param attributes any additional attributes for the element (such as class
+ *    or CSS styles or size
+ *
+ *#
+#macro( springFormPasswordInputEx $path $attributes )
+    #springBind($path)
+    <input type="password" id="${status.expression}" name="${status.expression}" value="" ${attributes} #validatorKeys() #springCloseTag()
+#end
+
+
+#**
+ * formTextArea
+ *
+ * display a text area and bind it to an attribute
+ * of a command or bean
+ *
+ * @param path the name of the field to bind to
+ * @param attributes any additional attributes for the element (such as class
+ *    or CSS styles or size
+ *
+ *#
+#macro( springFormTextareaEx $path $attributes )
+    #springBind($path)
+    <textarea id="${status.expression}" name="${status.expression}" ${attributes} #validatorKeys()>$!status.value</textarea>
+#end
+
+#**
+ * springFormSingleSelectEx
+ *
+ * Show a selectbox (dropdown) input element allowing a single value to be chosen
+ * from a list of options.
+ *
+ * The null check for $status.value leverages Velocity's 'quiet' notation rather
+ * than the more common #if($status.value) since this method evaluates to the
+ * boolean 'false' if the content of $status.value is the String "false" - not
+ * what we want.
+ *
+ * @param path the name of the field to bind to
+ * @param options a map (value=label) of all the available options
+ * @param attributes any additional attributes for the element (such as class
+ *    or CSS styles or size
+*#
+#macro( springFormSingleSelectEx $path $options $attributes )
+    #springBind($path)
+    <select id="${status.expression}" name="${status.expression}" ${attributes} #validatorKeys()>
+        #foreach($option in $options.keySet())
+            <option value="${option}"
+            #if("$!status.value" == "$option")
+                selected="selected"
+            #end>
+            ${options.get($option)}</option>
+        #end
+    </select>
+#end
+
+#**
+ * springFormMultiSelect
+ *
+ * Show a listbox of options allowing the user to make 0 or more choices from
+ * the list of options.
+ *
+ * @param path the name of the field to bind to
+ * @param options a map (value=label) of all the available options
+ * @param attributes any additional attributes for the element (such as class
+ *    or CSS styles or size
+*#
+#macro( springFormMultiSelectEx $path $options $attributes )
+    #springBind($path)
+    <select multiple="multiple" id="${status.expression}" name="${status.expression}" ${attributes} #validatorKeys()>
+        #foreach($option in $options.keySet())
+            <option value="${option}"
+            #foreach($item in $status.value)
+                #if($item == $option)
+                    selected="selected"
+                #end
+            #end
+            >${options.get($option)}</option>
+        #end
+    </select>
+#end
+
+#**
+ * springFormRadioButtons
+ *
+ * Show radio buttons.
+ *
+ * @param path the name of the field to bind to
+ * @param options a map (value=label) of all the available options
+ * @param separator the html tag or other character list that should be used to
+ *    separate each option.  Typically '&nbsp;' or '<br>'
+ * @param attributes any additional attributes for the element (such as class
+ *    or CSS styles or size
+*#
+#macro( springFormRadioButtonsEx $path $options $separator $attributes )
+    #springBind($path)
+    #foreach($option in $options.keySet())
+		<label>
+        <input type="radio" name="${status.expression}" value="${option}"
+        #if("$!status.value" == "$option")
+            checked="checked"
+        #end
+        ${attributes} #validatorKeys()
+        #springCloseTag()
+        ${options.get($option)}</label> ${separator}
+    #end
+#end
+
+#**
+ * springFormCheckboxes
+ *
+ * Show checkboxes.
+ *
+ * @param path the name of the field to bind to
+ * @param options a map (value=label) of all the available options
+ * @param separator the html tag or other character list that should be used to
+ *    separate each option.  Typically '&nbsp;' or '<br>'
+ * @param attributes any additional attributes for the element (such as class
+ *    or CSS styles or size
+*#
+#macro( springFormCheckboxesEx $path $options $separator $attributes )
+    #springBind($path)
+    #foreach($option in $options.keySet())
+        <input type="checkbox" name="${status.expression}" value="${option}" 
+        #foreach($item in $status.value) 
+            #if($item == $option) checked="checked" #end 
+        #end
+        ${attributes} #validatorKeys() #springCloseTag()
+        ${options.get($option)} ${separator}
+    #end
+    <input type="hidden" name="_${status.expression}" value="on"/>
+#end
+
+#**
+ * springFormCheckbox
+ *
+ * Show a single checkbox.
+ *
+ * @param path the name of the field to bind to
+ * @param attributes any additional attributes for the element (such as class
+ *    or CSS styles or size
+*#
+#macro( springFormCheckboxEx $path $attributes )
+    #springBind($path)
+    <input type="hidden" name="_${status.expression}" value="on"/>
+    <input type="checkbox" id="${status.expression}" name="${status.expression}"#if("$!{status.value}"=="true") checked="checked"#end ${attributes} #validatorKeys()/>
+#end
+
+#**
+ * springShowErrors
+ *
+ * Show validation errors for the currently bound field, with
+ * optional style attributes.
+ *
+ * @param separator the html tag or other character list that should be used to
+ *    separate each option. Typically '<br>'.
+ * @param classOrStyle either the name of a CSS class element (which is defined in
+ *    the template or an external CSS file) or an inline style. If the value passed in here
+ *    contains a colon (:) then a 'style=' attribute will be used, else a 'class=' attribute
+ *    will be used.
+*#
+#macro( springShowErrorsEx $noescSeparator $cssClass $id $cssErrorClass)
+	<div class="column error-wrap"><div id="#if($id)$id#{else}error-${status.expression}#end" class="#if($status.errorMessages && $status.errorMessages.size()>0)#if($cssErrorClass)$cssErrorClass#{else}error-warn#end#end $cssClass">
+    #foreach($noescError in $status.errorMessages)
+        ${noescError}${noescSeparator}
+	#end
+	</div></div>
+#end

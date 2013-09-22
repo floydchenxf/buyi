@@ -1,0 +1,29 @@
+<div class="sudafooter">
+<div class="container">
+	<div class="row copy-right">
+		<div class="row">
+			<div class="left">
+				<a class="column alpha">关于我们</a>
+				<a class="column" target="_blank">加入我们</a>
+				<a class="column" target="_blank">合作联系</a>
+				<a class="column" target="_blank">使用帮助</a>
+			</div>
+			<div class="right">
+				<b>关注我们：</b>
+				<a class="sina" target="_blank" href="http://weibo.com/keleba2013">新浪微博</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="left">
+			<b class="column">友情链接：</b>
+			<a class="column" href="http://yunqigou.com" target="_blank">运气购</a>
+			</div>
+		</div>
+		<div class="left">© Copyright by 可乐吧 2011-2013 keleba.org, all rights reserved 备案<a href="http://www.miitbeian.gov.cn/" target="_blank">浙ICP备13004159号</a></div>
+		<div class="right">
+			<a href="http://sh.cyberpolice.cn" target="_blank" class="wangjing column"></a>
+			<a href="http://www.zx110.org/" target="_blank" class="zhengxin column omega"></a>
+		</div>
+	</div>
+ </div>
+ </div>

@@ -1,0 +1,1 @@
+#set($noescresult = $!result)$!noescresult<sitemesh:decorator name='is-ajax'>true</sitemesh:decorator>

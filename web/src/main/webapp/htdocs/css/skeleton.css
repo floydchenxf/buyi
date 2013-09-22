@@ -1,0 +1,200 @@
+/*
+* Skeleton V1.1
+* Copyright 2011, Dave Gamache
+* www.getskeleton.com
+* Free to use under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+* 8/17/2011
+*/
+
+
+/* Table of Contents
+==================================================
+    #Base 960 Grid
+    #Tablet (Portrait)
+    #Mobile (Portrait)
+    #Mobile (Landscape)
+    #Clearing */
+
+
+
+/* #Base 960 Grid
+================================================== */
+
+    .container                                  { position: relative; width: 960px; margin: 0 auto; padding: 0; }
+    .lt-ie8 .container {position: static;}
+
+	.container:after {
+    	content:"\0020";
+		display:block;
+		height:0;
+		clear:both;
+    }
+    
+    .dialog { 
+    	display: none; 
+    	position: absolute; 
+    	top: 50%; 
+    	left: 50%; 
+    	outline: none; 
+    	overflow: visible; 
+    	padding: 2px!important;
+		background-color: #D2F1E9; 
+		-webkit-border-radius:8px; 
+		-moz-border-radius: 8px;
+		box-shadow:0 0 80px 0 rgba(0, 0, 0, .4);
+	}
+    .popup                                      { display: none; position: absolute; top: 50%; left: 50%;}
+    .popup .container                           { width: auto; }
+    .dialog .container                          { width: auto; background-color: white; padding:1em; }
+    .lt-ie7 .dialog                             { position: absolute; top:50%; left: 50%; height: 0; outline: none; overflow: visible }
+    .lt-ie9 .dialog                             { padding: 0; }
+
+	.container .left,
+	.dialog .left,
+	.popup .left{ 
+		float:left !important;
+	}
+	.container .right,
+	.dialog .right,
+	.popup .right{
+		float:right !important;
+	}
+
+	.column,
+    .columns                         { float: left; display: inline; margin-left: 5px; margin-right: 5px; }
+
+    /* Nested  Classes */
+    .alpha             { margin-left: 0 !important;}
+    .omega             { margin-right:0 !important;}
+
+    .container .w1                      {display: inline; float:left;width: 20px;  margin:0 5px;}
+    .container .w1_5                    {display: inline; float:left;width: 35px;  margin:0 5px;}
+    .container .w2                      {display: inline; float:left;width: 50px; margin:0 5px; }
+    .container .w2_5                    {display: inline; float:left;width: 65px; margin:0 5px; }
+    .container .w3                      {display: inline; float:left;width: 80px; margin:0 5px; }
+    .container .w3_5                    {display: inline; float:left;width: 95px; margin:0 5px; }
+    .container .w4                      {display: inline; float:left;width: 110px; margin:0 5px; }
+    .container .w5                      {display: inline; float:left;width: 140px; margin:0 5px; }
+    .container .w6                      {display: inline; float:left;width: 170px; margin:0 5px; }
+    .container .w7                      {display: inline; float:left;width: 200px; margin:0 5px; }
+    .container .w8                      {display: inline; float:left;width: 230px; margin:0 5px; }
+    .container .w9                      {display: inline; float:left;width: 260px; margin:0 5px; }
+    .container .w10                     {display: inline; float:left;width: 290px; margin:0 5px; }
+    .container .w11                     {display: inline; float:left;width: 320px; margin:0 5px; }
+    .container .w12                     {display: inline; float:left;width: 350px; margin:0 5px; }
+    .container .w12_5                   {display: inline; float:left;width: 365px; margin:0 5px; }
+    .container .w13                     {display: inline; float:left;width: 380px; margin:0 5px; }
+    .container .w14                     {display: inline; float:left;width: 410px; margin:0 5px; }
+    .container .w15                     {display: inline; float:left;width: 440px; margin:0 5px; }
+    .container .w16                     {display: inline; float:left;width: 470px; margin:0 5px; }
+    .container .w17                     {display: inline; float:left;width: 500px; margin:0 5px; }
+    .container .w18                     {display: inline; float:left;width: 530px; margin:0 5px; }
+    .container .w19                     {display: inline; float:left;width: 560px; margin:0 5px; }
+    .container .w20                     {display: inline; float:left;width: 590px; margin:0 5px; }
+    .container .w21                     {display: inline; float:left;width: 620px; margin:0 5px; }
+    .container .w22                     {display: inline; float:left;width: 650px; margin:0 5px; }
+    .container .w23                     {display: inline; float:left;width: 680px; margin:0 5px; }
+    .container .w24                     {display: inline; float:left;width: 710px; margin:0 5px; }
+    .container .w25                     {display: inline; float:left;width: 740px; margin:0 5px; }
+    .container .w26                     {display: inline; float:left;width: 770px; margin:0 5px; }
+    .container .w27                     {display: inline; float:left;width: 800px; margin:0 5px; }
+    .container .w28                     {display: inline; float:left;width: 830px; margin:0 5px; }
+    .container .w29                     {display: inline; float:left;width: 860px; margin:0 5px; }
+    .container .w30                     {display: inline; float:left;width: 890px; margin:0 5px; }
+    .container .w31                     {display: inline; float:left;width: 920px; margin:0 5px; }
+    .container .w32                     {display: inline; float:left;width: 950px; margin:0 5px; }
+
+    .container .one-third               {display: inline; float:left;width: 300px; margin:0 5px; }
+    .container .two-thirds              {display: inline; float:left;width: 620px; margin:0 5px; }
+
+    /* Offsets */
+    .container .offset-by-half                { padding-left: 15px;  }
+    .container .offset-by-1                   { padding-left: 30px;  }
+    .container .offset-by-2                   { padding-left: 60px; }
+    .container .offset-by-3                   { padding-left: 90px; }
+    .container .offset-by-4                   { padding-left: 120px; }
+    .container .offset-by-5                   { padding-left: 150px; }
+    .container .offset-by-6                   { padding-left: 180px; }
+    .container .offset-by-7                   { padding-left: 210px; }
+    .container .offset-by-8                   { padding-left: 240px; }
+    .container .offset-by-9                   { padding-left: 270px; }
+    .container .offset-by-10                  { padding-left: 300px; }
+    .container .offset-by-11                  { padding-left: 330px; }
+    .container .offset-by-12                  { padding-left: 360px; }
+    .container .offset-by-13                  { padding-left: 390px; }
+    .container .offset-by-14                  { padding-left: 420px; }
+    .container .offset-by-15                  { padding-left: 450px; }
+    .container .offset-by-16                  { padding-left: 480px; }
+    .container .offset-by-17                  { padding-left: 510px; }
+    .container .offset-by-18                  { padding-left: 540px; }
+    .container .offset-by-19                  { padding-left: 570px; }
+    .container .offset-by-20                  { padding-left: 600px; }
+    .container .offset-by-21                  { padding-left: 630px; }
+    .container .offset-by-22                  { padding-left: 660px; }
+    .container .offset-by-23                  { padding-left: 690px; }
+    .container .offset-by-24                  { padding-left: 720px; }
+    .container .offset-by-25                  { padding-left: 750px; }
+    .container .offset-by-26                  { padding-left: 780px; }
+    .container .offset-by-27                  { padding-left: 810px; }
+    .container .offset-by-28                  { padding-left: 840px; }
+    .container .offset-by-29                  { padding-left: 870px; }
+    .container .offset-by-30                  { padding-left: 900px; }
+    .container .offset-by-31                  { padding-left: 930px; }
+
+
+
+/* #Clearing
+================================================== */
+
+    /* Self Clearing Goodness */
+    .container:after { content: "\0020"; display: block; height: 0; clear: both; visibility: hidden; }
+
+    /* Use clearfix class on parent to clear nested s,
+    or wrap each row of s in a <div class="row"> */
+    .clearfix:before,
+    .clearfix:after,
+    .row:before,
+    .row:after {
+      content: '\0020';
+      display: block;
+      overflow: hidden;
+      visibility: hidden;
+      width: 0;
+      height: 0; }
+    .row:after,
+    .clearfix:after {
+      clear: both; }
+    .row,
+    .clearfix {
+    zoom: 1;
+       }
+
+    /* You can also use a <br class="clear" /> to clear s */
+    .clear {
+      clear: both;
+      display: block;
+      overflow: hidden;
+      visibility: hidden;
+      width: 0;
+      height: 0;
+    }
+	
+	.fd-right {
+		float:right;
+	}
+	
+	.fd-left {
+		float:left;
+	}
+	
+	.fd-clr {
+		zoom: 1;
+	}
+	
+	.fd-clr:after {
+	    clear: both;
+	    content: " ";
+	    display: block;
+	    height: 0;
+	}
