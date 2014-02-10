@@ -5,6 +5,12 @@ import java.util.Date;
 import com.buyi.dal.entity.BaseDO;
 import com.buyi.dal.entity.viewobject.RoleType;
 
+/**
+ * 登陆用户信息
+ * 
+ * @author cxf128
+ * 
+ */
 public class UserDO extends BaseDO<Long> {
 
 	private static final long serialVersionUID = 1L;
@@ -13,31 +19,9 @@ public class UserDO extends BaseDO<Long> {
 
 	private String pwd;
 
-	private String nickName;
-
 	private String realName;
 
-	/**
-	 * 个人图片信息
-	 */
-	private String profileImage;
-
 	private RoleType roleType;
-
-	/**
-	 * @return the profileImage
-	 */
-	public String getProfileImage() {
-		return profileImage;
-	}
-
-	/**
-	 * @param profileImage
-	 *            the profileImage to set
-	 */
-	public void setProfileImage(String profileImage) {
-		this.profileImage = profileImage;
-	}
 
 	/**
 	 * @return the roleType
@@ -98,20 +82,4 @@ public class UserDO extends BaseDO<Long> {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-
-	/**
-	 * @return the nickName
-	 */
-	public String getNickName() {
-		return nickName;
-	}
-
-	/**
-	 * @param nickName
-	 *            the nickName to set
-	 */
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
-
 }

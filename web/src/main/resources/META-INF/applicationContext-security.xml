@@ -8,24 +8,26 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+	
 	<bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandlerEx">
-		<property name="defaultTargetUrl" value="/buyi/buyi_show" />
-		<property name="alwaysUseDefaultTargetUrl" value="false" />
+		<property name="defaultTargetUrl" value="/market/index"/>
+		<property name="alwaysUseDefaultTargetUrl" value="false"/>
 	</bean>
-
+	
 	<security:http pattern="/!s/**" security="none" />
 	<security:http pattern="/*.ico" security="none" />
 	<security:http pattern="/*.png" security="none" />
-
+	
 	<!-- 默认验证 -->
 	<security:http auto-config="false" disable-url-rewriting="true">
-		<security:intercept-url pattern="/sso/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<security:intercept-url pattern="/sso/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<security:intercept-url pattern="/market/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<security:intercept-url pattern="/buyer/**" requires-channel="http" access="ROLE_ADMIN,ROLE_NORMAL" />
 		<security:intercept-url pattern="/managerment/**" requires-channel="http" access="ROLE_ADMIN" />
 		<security:form-login login-page="/sso/login" login-processing-url="/sso/login_check" username-parameter="uname"
-			password-parameter="pwd"
-			authentication-failure-url="/sso/login?error=%E8%B4%A6%E5%8F%B7%E4%B8%8D%E5%AD%98%E5%9C%A8%E6%88%96%E5%AF%86%E7%A0%81%E9%94%99%E8%AF%AF%EF%BC%8C%E8%AF%B7%E9%87%8D%E8%AF%95"
-			authentication-success-handler-ref="authenticationSuccessHandler" />
-		<security:logout logout-success-url="/buyi/buyi_show" logout-url="/member/logout" delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE" />
+		password-parameter="pwd" authentication-failure-url="/sso/login?error=%E8%B4%A6%E5%8F%B7%E4%B8%8D%E5%AD%98%E5%9C%A8%E6%88%96%E5%AF%86%E7%A0%81%E9%94%99%E8%AF%AF%EF%BC%8C%E8%AF%B7%E9%87%8D%E8%AF%95"
+		authentication-success-handler-ref="authenticationSuccessHandler"/>
+		<security:logout logout-success-url="/joke/joke_show" logout-url="/member/logout" delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE" />
 		<security:session-management session-authentication-error-url="/!s/401.html" session-fixation-protection="migrateSession">
 			<security:concurrency-control max-sessions="6" error-if-maximum-exceeded="true" />
 		</security:session-management>

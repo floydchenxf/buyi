@@ -8,38 +8,28 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd"
 	default-lazy-init="true">
 
-	<context:component-scan base-package="com.buyi.webapp"
-		resource-pattern="**/*Controller*.class" />
-	<context:component-scan base-package="com.buyi.webapp"
-		resource-pattern="**/*Widget*.class" />
-
+	<context:component-scan base-package="com.buyi.webapp" resource-pattern="**/*Controller*.class" />
+	
 	<mvc:annotation-driven validator="validator" ignoreDefaultModelOnRedirect="true">
 		<mvc:argument-resolvers>
 			<bean class="org.springframework.data.web.PageableArgumentResolverEx">
 				<property name="parsePageSize" value="false" />
 			</bean>
 		</mvc:argument-resolvers>
-		<mvc:message-converters>
-			<bean class="org.springframework.http.converter.json.MappingJacksonHttpErrorMsgConverter">
-				<property name="messageSource" ref="messageSource" />
-			</bean>
-		</mvc:message-converters>
 	</mvc:annotation-driven>
-	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBeanEx" />
-	<mvc:resources location="/htdocs/" mapping="/!s/**" />
-	<mvc:resources location="/htdocs/" mapping="/*.ico" />
-	<mvc:resources location="/htdocs/" mapping="/*.png" />
-
-	<!-- view with default controller, no model -->
-	<!-- TODO redirect view not found to 404 page -->
-	<mvc:view-controller path="/**/_*" />
+	
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:messages" />
+		<property name="cacheSeconds" value="120" />
+		<property name="defaultEncoding" value="UTF-8"/>
+	</bean>
+	
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" >
+		<property name="validationMessageSource" ref="messageSource"/> 
+	</bean>
 
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
-	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-		<property name="messageConverters">
-			<bean id="jsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
-		</property>
-	</bean>
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
 
 	<bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
 		<property name="suffix" value=".vm" />
@@ -59,7 +49,7 @@
 				<entry key="velocimacro.library" value="/META-INF/velocimacro.vm" />
 				<entry key="eventhandler.referenceinsertion.class">
 					<list>
-						<value>org.apache.velocity.app.event.implement.EscapeHtmlReference</value>
+						<!--value>org.apache.velocity.app.event.implement.EscapeHtmlReference</value-->
 						<value>org.apache.velocity.app.event.implement.EscapeJavaScriptReference</value>
 					</list>
 				</entry>
@@ -69,24 +59,14 @@
 			</map>
 		</property>
 	</bean>
-	<!-- shared engine, but spring.vm not loaded, @see VelocityConfigurer.postProcessVelocityEngine() 
-		to achieve this, put below bean into applicationContext.xml file. <bean id="velocityEngine" 
-		class="org.springframework.ui.velocity.VelocityEngineFactoryBean" /> -->
+	
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="8388608" /><!-- 8m -->
 	</bean>
 
-	<!-- TODO header, cookie, or session -->
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.FixedLocaleResolver">
 		<property name="defaultLocale" value="zh_CN" />
 	</bean>
 
-	<!-- TODO session -->
 	<bean id="themeResolver" class="org.springframework.web.servlet.theme.FixedThemeResolver"/>
-
-	<!-- TODO -->
-	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basename" value="ApplicationResources" />
-		<property name="useCodeAsDefaultMessage" value="true" />
-	</bean>
 </beans>

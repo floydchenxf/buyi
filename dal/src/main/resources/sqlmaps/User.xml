@@ -8,10 +8,8 @@
 	<resultMap id="jkUserResult" class="jkUser">
 		<result column="id"                   property="id"                     javaType="java.lang.Long" />
 		<result column="u_name"               property="realName"               javaType="java.lang.String" />
-		<result column="n_name"               property="nickName"               javaType="java.lang.String" />
 		<result column="u_pwd"                property="pwd"                    jdbcType="java.lang.String" />
-		<result column="u_avatar_img"         property="profileImage"           jdbcType="java.lang.String" />
-		<result column="u_role_type"            property="roleType"               jdbcType="roleType" />
+		<result column="u_role_type"          property="roleType"               jdbcType="roleType" />
 		<result column="last_online"          property="lastOnlineTime"         javaType="java.util.Date" />
 	</resultMap>
 	
@@ -19,17 +17,13 @@
 	<![CDATA[ 
 		insert into user (
 			u_name,
-			n_name,
 			u_pwd,
 			u_role_type,
-			u_avatar_img,
 			last_online
 		) values (
 			#realName#,
-			#nickName#,
 			#pwd#,
 			#roleType#,
-			#profileImage#,
 			now()
 		)
 	]]>
@@ -45,9 +39,6 @@
 		<isNotEmpty property="realName" prepend=",">
 			u_name = #realName#
 		</isNotEmpty>
-		<isNotEmpty property="nickName" prepend=",">
-			n_name = #nickName#
-		</isNotEmpty>
 		<isNotEmpty property="pwd" prepend=",">
 			u_pwd = #pwd#
 		</isNotEmpty>
@@ -61,10 +52,7 @@
 	   select 
 	       id,
 	       u_name,
-	       n_name,
 	       u_pwd,
-	       u_role_type,
-	       u_avatar_img,
 	       u_role_type,
 	       last_online
 	   from
@@ -78,10 +66,8 @@
 	   select 
 	       id,
 	       u_name,
-	       n_name,
 	       u_pwd,
 	       u_role_type,
-	       u_avatar_img,
 	       last_online
 	   from
 	       user
@@ -96,10 +82,8 @@
 		select  
 		   id,
 	       u_name,
-	       n_name,
 	       u_pwd,
 	       u_role_type,
-	       u_avatar_img,
 	       u_role_type,
 	       last_online
 		from 

@@ -12,6 +12,6 @@ public interface ProductTypeDAO {
 	 * @param companyId
 	 * @return
 	 */
-	List<ProductTypeDO> queryProductTypesByCompanyId(Long companyId);
+	List<ProductTypeDO> queryProductTypesByCompanyId(Long companyId, int startRow, int pageSize);
 
 }

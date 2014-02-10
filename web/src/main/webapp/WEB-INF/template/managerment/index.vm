@@ -1,0 +1,21 @@
+<html>
+<head>
+	<title>华强布艺商城</title>
+	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/skeleton.css" />
+	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/base.css" />
+	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/goods-managerment.css" />
+	<script type="text/javascript" src="$urlUtil.getStaticServer()/js/jquery-1.7.1.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="w6 categroy alpha">
+			$controller.setTemplate('controller/managerment_nav.vm').setParameter('index',0)
+		</div>
+		<div class="w26 categroy">
+			<p class="no-data">
+			亲，暂时还没数据
+			</p>
+		</div>
+	</div>
+</body>
+</html>

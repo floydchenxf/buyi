@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="category">
+	<typeAlias alias="categoryDO" type="com.buyi.dal.entity.dataobject.CategoryDO" />
+	<resultMap id="categoryResult" class="categoryDO">
+		<result column="id"                  property="id"                      javaType="java.lang.Long" />
+		<result column="category_name"       property="categoryName"            javaType="java.lang.String" />
+		<result column="order_id"            property="order"                   javaType="java.lang.Integer" />
+		<result column="p_id"                property="parentId"                javaType="java.lang.Long" />
+		<result column="leaf"                property="leaf"                    javaType="java.lang.Boolean" />
+		<result column="gmt_create"          property="gmtCreate"               javaType="java.util.Date" />
+		<result column="gmt_modified"        property="gmtModified"             javaType="java.util.Date" />
+	</resultMap>
+	
+	<select id="QUERY_ALL_CATEGORY" resultMap="categoryResult">
+		<![CDATA[ 
+	   select 
+	       id,
+	       category_name,
+	       order_id,
+	       p_id,
+	       leaf,
+	       gmt_create,
+	       gmt_modified
+	   from
+	       category
+	   ]]>
+	</select>
+	
+	<select id="QUERY_CATEGORY_BY_PARENT_ID" parameterClass="long" resultMap="categoryResult">
+	<![CDATA[ 
+	select 
+		id,
+		category_name,
+		order_id,
+		p_id,
+		leaf,
+		gmt_create,
+		gmt_modified
+	where
+		p_id = #id#
+	]]>
+	</select>
+	
+</sqlMap>

@@ -3,6 +3,7 @@
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="buyiCompanyProduct">
     <typeAlias alias="byComanyProduct" type="com.buyi.dal.entity.dataobject.CompanyProductDO" />
+    <typeAlias alias="topProduct" type="com.buyi.dal.entity.viewobject.TopProductVO" />
     <resultMap id="byComanyProductResult" class="byComanyProduct">
 		<result column="id"                   property="id"                     javaType="java.lang.Long" />
 		<result column="company_id"           property="companyId"              javaType="java.lang.Long" />
@@ -16,7 +17,14 @@
 		<result column="gmt_modified"         property="gmtModified"            javaType="java.util.Date" />
 	</resultMap>
 	
-    <select id="QUERY-COMPANY-PRODUCT-BY-TYPE-ID" parameterClass="map" resultMap="byComanyProductResult">
+     <resultMap id="topProductResult" class="topProduct">
+		<result column="id"                   property="id"                     javaType="java.lang.Long" />
+		<result column="company_id"           property="companyId"              javaType="java.lang.Long" />
+		<result column="product_num"          property="productNum"             javaType="java.lang.Integer" />
+		<result column="product_ids"          property="productIds"             javaType="java.lang.String" />
+	</resultMap>
+	
+    <select id="QUERY-COMPANY-PRODUCT-BY-CONDITION" parameterClass="map" resultMap="byComanyProductResult">
 	<![CDATA[ 
 	   select 
 	       id,
@@ -31,12 +39,44 @@
 	       gmt_modified
 	   from
 	       company_product
-	   where
-	       product_type_id = #productTypeId#
-	   order by gmt_create desc,id desc
-	   limit #startRow#, #pageSize#
 	   ]]>
+	   <dynamic prepend="where">
+	       <isNotNull property="productIds" prepend=" and ">
+	           id in 
+	           <iterate property="productIds" open="(" close=")" conjunction=",">#productIds[]#</iterate>
+	       </isNotNull>
+	       <isNotNull property="productTypeId" prepend=" and ">
+	           product_type_id = #productTypeId#
+	       </isNotNull>
+	   </dynamic>
+	   <![CDATA[ 
+	   order by gmt_create desc,id desc
+	   ]]>
+	   <isPropertyAvailable property="startRow">
+	       limit #startRow#, #pageSize#
+	   </isPropertyAvailable>
 	</select>
+	
+    <select id="QUERY-COMPANY-PRODUCT-TOP-3-BY-TYPE" parameterClass="map" resultMap="topProductResult">
+        <![CDATA[
+        select 
+        	substring_index(group_concat(id order by id desc), ',', 3) as product_ids, 
+        	company_id, 
+        	product_type_id as id,
+        	count(*) as product_num 
+        from 
+        	company_product 
+        where 
+        	company_id = #companyId# and product_type_id in 
+        ]]>
+        <iterate property="productTypeIds" open="(" close=")" conjunction=",">#productTypeIds[]#</iterate>
+       <![CDATA[
+        group by 
+        	product_type_id
+        order by 
+        	product_type_id desc
+        ]]>
+    </select>
 	
     <insert id="INSERT-COMPANY-PRODUCT" parameterClass="byComanyProduct">
         <![CDATA[ 

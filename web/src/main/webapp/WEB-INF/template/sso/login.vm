@@ -1,0 +1,18 @@
+<html>
+	<head>
+		<title>欢迎登陆布艺市场</title>
+	</head>
+	<body>
+		#springBind("loginForm.*")
+		#foreach($error in $status.errorMessages) <b> $error </b> <br> #end
+		<form name="loginForm"  method="post">
+			#springBind("loginForm.uname")
+			用户<input type="text" id="uname" name="${status.expression}" value="$!{status.value}"><br>
+			
+			#springBind("loginForm.pwd")
+			密码<input type="password" name="pwd"><br>
+			<input type="submit" name="提交">
+			<input type="reset" name="重置">
+		</form>
+	<body>
+</html>

@@ -1,0 +1,34 @@
+.title-columns {
+	font-size:14px;
+	line-height:24px;
+}
+
+.title-columns li {
+	background-color:#e7e7ea;
+}
+
+
+.title-first {
+	border:1px solid #ddd;
+}	
+
+.title-item {
+	border-top:1px solid #ddd;
+	border-right:1px solid #ddd;
+	border-bottom:1px solid #ddd;
+}
+
+.value-first {
+	border-left:1px solid #ddd;
+	border-right:1px solid #ddd;
+	border-bottom:1px solid #ddd;
+}
+
+.value-item {
+	border-right:1px solid #ddd;
+	border-bottom:1px solid #ddd;
+}
+
+.current {
+	color:red;
+}

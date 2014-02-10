@@ -1,0 +1,112 @@
+<html>
+<head>
+	<title>华强布艺商城</title>
+	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/skeleton.css" />
+	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/base.css" />
+	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/goods-managerment.css" />
+	<script type="text/javascript" src="$urlUtil.getStaticServer()/js/jquery-1.7.1.js"></script>
+	<script type="text/javascript">
+	$(document).ready(
+		function(){
+			$('#c1 li').click(function(){
+				var target = $('#c2');
+				var selectValue = $('#selected-category');
+				var publishButton = $('#publish-goods-button');
+				target.html("");
+				selectValue.val('');
+				publishButton.css('display', 'none');
+				var id = $(this).attr('data-item');
+				var isLeaf = $(this).attr('leaf');
+				if (isLeaf == 'true') {
+					selectValue.val(id);
+					publishButton.css('display', 'block');
+					publishButton.bind('click', function(){
+						$('#publish-goods-form').submit();
+					});
+				} else {
+					$.getJSON("$urlUtil.QUERY_SUB_CATEGORY?pid="+id, function(data) {
+						$.each(data, function(i, item) {
+							var isLeaf = item.leaf;
+							if (isLeaf == 'true') {
+							} else {
+								target.append("<li data-item='"+item.id+"' leaf='"+item.leaf+"'>"+item.categoryName+"</li>");
+							}
+						});
+					});
+				}
+			});
+			
+			$('#c2 li').live('click', function(){
+				var target = $('#c3');
+				var selectValue = $('#selected-category');
+				var publishButton = $('#publish-goods-button');
+				target.html('');
+				selectValue.val('');
+				publishButton.css('display', 'none');
+				var id = $(this).attr('data-item');
+				var isLeaf = $(this).attr('leaf');
+				if (isLeaf == 'true') {
+					selectValue.val(id);
+					publishButton.css('display', 'block');
+					publishButton.bind('click', function(){
+						$('#publish-goods-form').submit();
+					});
+				} else {
+					$.getJSON("$urlUtil.QUERY_SUB_CATEGORY?pid="+id, function(data) {
+						$.each(data, function(i, item) {
+							target.append("<li data-item='"+item.id+"' leaf='"+item.leaf+"'>"+item.categoryName+"</li>");
+						});
+					});
+				}
+			});
+			
+			$('#c3 li').live('click', function() {
+				var selectValue = $('#selected-category');
+				var publishButton = $('#publish-goods-button');
+				selectValue.val('');
+				publishButton.css('display', 'none');
+				var id = $(this).attr('data-item');
+				var isLeaf = $(this).attr('leaf');
+				if (isLeaf == 'true') {
+					selectValue.val(id);
+					publishButton.css('display', 'block');
+					publishButton.bind('click', function(){
+						$('#publish-goods-form').submit();
+					});
+				}
+			});
+		}
+	)
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="w6 categroy alpha">
+			$controller.setTemplate('controller/managerment_nav.vm').setParameter('index',1)
+		</div>
+		<div class="w26 categroy">
+			<ul id="c1" class="column categroy scollbar">
+				#foreach($category in $categoryList)
+					<li data-item="$category.id" leaf="$category.leaf">$category.categoryName</li>
+				#end
+			</ul>
+			<div class="w1"></div>
+			<ul id="c2" class="column categroy scollbar">
+			</ul>
+			<div class="w1"></div>
+			<ul id="c3" class="column categroy scollbar">
+			</ul>
+		</div>
+	</div>
+	<div class="container">
+		<div class="w32">
+			<form name="publish-goods-form" id="publish-goods-form" method="post" action="$urlUtil.PUBLISH_GOODS">
+				<input id="selected-category" name="category_id" type="hidden"/>
+				<div id="publish-goods-button" class="right button" style="display:none;">
+					发布宝贝
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

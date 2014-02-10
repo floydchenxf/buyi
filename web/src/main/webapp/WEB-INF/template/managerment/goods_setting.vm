@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>华强布艺商城</title>
+	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/base.css" />
+	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/goods-managerment.css" />
+	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/skeleton.css" />
+    <script src="$urlUtil.getStaticServer()/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <script src="$urlUtil.getStaticServer()/js/plugin.js" type="text/javascript"></script>
+	<script type="text/javascript" src="$urlUtil.getStaticServer()/kindeditor/kindeditor.js"></script>
+	<script type="text/javascript" src="$urlUtil.getStaticServer()/kindeditor/lang/zh_CN.js"></script>
+    <script>
+        $(function () {
+            $("#up").uploadPreview({ imgPreview: "#image-pre", width:80,height:80, callback:function(path){
+				var l = path.lastIndexOf('\\');
+				if (l > 0) {
+					path = path.substring(l+1);
+				}
+				$('#file-name1').html(path);
+				}
+			});
+			
+			 $("#up2").uploadPreview({ imgPreview: "#image-pre2", width:80,height:80, callback:function(path){
+				var l = path.lastIndexOf('\\');
+				if (l > 0) {
+					path = path.substring(l+1);
+				}
+				$('#file-name2').html(path);
+				}
+			});
+			
+			 $("#up3").uploadPreview({ imgPreview: "#image-pre3", width:80,height:80, callback:function(path){
+				var l = path.lastIndexOf('\\');
+				if (l > 0) {
+					path = path.substring(l+1);
+				}
+				$('#file-name3').html(path);
+				}
+			});
+			
+			KindEditor.create('#editor1', {
+					width : '100%',
+					height: 400,
+					uploadJson:'$urlUtil.UPLOAD_FILES',
+					afterUpload : function(url) {
+                        //alert(url);
+					}
+			});
+			
+			var target = $('#postfee-setting');
+				$('#whopsSeller2').click(function(){
+					if ('none' == target.css('display')) {
+						target.css('display','block');
+					} 
+				});
+				
+				$('#whopsSeller1').click(function() {
+					if ('block' == target.css('display')) {
+						target.css('display','none');
+					}
+				});
+				
+				$('#fileupload-popupwindow').jqm({ 
+					overlay: 30
+				});
+        });
+    </script>	
+</head>
+<body>
+<div class="container">
+		<div class="w6 categroy alpha">
+			$controller.setTemplate('controller/managerment_nav.vm').setParameter('index',1)
+		</div>
+		<div class="w26 categroy">
+			<form method="post" action="$urlUtil.ADD_GOODS" enctype="multipart/form-data">
+				<ul class="row goods-info">
+					<li class="w4">
+						宝贝名称：<font color=red>*</font>
+					</li>
+					#springBind("goodsForm.goodsTitle")
+					<li class="w21 alpha">
+						<input type="text" name="${status.expression}" value="$!{status.value}">
+						<font color="red">$status.errorMessage</font>
+					</li>
+				</ul>
+				<ul class="row goods-info">
+					<li class="w4">
+						一 口 价：<font color=red>*</font>
+					</li>
+					#springBind("goodsForm.goodsPrice")
+					<li class="w21 alpha">
+						<input type="text" name="${status.expression}" value="$!{status.value}">
+						<font color="red">$status.errorMessage</font>
+					</li>
+				</ul>
+				<ul class="row">
+					<li class="w4" style="height:40px;">
+						宝贝运费：
+					</li>
+					<li class="w21 alpha">
+						<div>
+							<input type="radio" class="postfee-radio" id="whopsSeller1" value="1" name="postfeeType" checked>卖家承担运费
+						</div>
+						<div >
+							<input type="radio"  class="postfee-radio" id="whopsSeller2" value="2" name="postfeeType">买家承担运费
+						</div>
+						<div id="postfee-setting" style="display:none;border:1px solid #ececec; background-color:#f8f8f8;padding:3px;">
+							#springBind("goodsForm.pinyou")
+							平邮:<input type="text" name="${status.expression}" value="$!{status.value}" size=8>元  
+							#springBind("goodsForm.kuaidi")
+							快递:<input type="text" name="${status.expression}" value="$!{status.value}" size=8>元
+							#springBind("goodsForm.ems")
+							EMS:<input type="text" name="${status.expression}" value="$!{status.value}" size=8>元
+						</div>
+					</li>
+					#springBind("goodsForm.categoryId")
+					<input type="hidden" name="${status.expression}" value="$!{status.value}">
+				</ul>
+			
+				<ul class="row">
+					<li class="w4">
+						宝贝图片
+					</li>
+					<li class="w4 alpha">
+						<div class="goods-pics" style="position:relative;">
+							<img id="image-pre" width="80" height="80">
+							<div style="position: absolute;bottom:0px;left:0px;height:24px;width:80px;background-color:#efefef;opacity:0.5;filter:alpha(opacity=50)">上传图片</div>
+							<input type="file" id="up" name="imageuploads" style="position:absolute;opacity:0;filter:alpha(opacity=0);  ;width:80px;height:80px;bottom:0px;left:0px;"/>
+						</div>
+						<div id="file-name1" style="width:80px; height:20px;text-align:center;overflow:hidden;"></div>
+					</li>
+					
+					<li class="w4 alpha">
+						<div class="goods-pics" style="position:relative;">
+							<img id="image-pre2" width="80" height="80">
+							<div style="position: absolute;bottom:0px;left:0px;height:24px;width:80px;background-color:#efefef;opacity:0.5;filter:alpha(opacity=50)">上传图片</div>
+							<input type="file" id="up2" name="imageuploads" style="position:absolute;opacity:0;filter:alpha(opacity=0);  ;width:80px;height:80px;bottom:0px;left:0px;"/>
+						</div>
+						<div id="file-name2" style="width:80px; height:20px;text-align:center;overflow:hidden;"></div>
+					</li>
+					
+					<li class="w4 alpha">
+						<div class="goods-pics" style="position:relative;">
+							<img id="image-pre3" width="80" height="80">
+							<div style="position: absolute;bottom:0px;left:0px;height:24px;width:80px;background-color:#efefef;opacity:0.5;filter:alpha(opacity=50)">上传图片</div>
+							<input type="file" id="up3" name="imageuploads" style="position:absolute;opacity:0;filter:alpha(opacity=0);  ;width:80px;height:80px;bottom:0px;left:0px;"/>
+						</div>
+						<div id="file-name3" style="width:80px; height:20px;text-align:center;overflow:hidden;"></div>
+					</li>
+				</ul>
+				<ul class="row">
+					#springBind("goodsForm.picNames")
+					<li><font color="red">$status.errorMessage</font></li>
+				</ul>
+				<div class="row">
+					#springBind("goodsForm.goodsContent")
+					<textarea id="editor1" name="${status.expression}">$!{status.value}</textarea>
+					<font color="red">$status.errorMessage</font>
+				</div>
+				<div class="row">
+					<input type="submit" value="提交">
+				</div>
+			</form>
+		</div>
+</body>
+</html>

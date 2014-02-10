@@ -2,8 +2,6 @@
 <tools>
 	<data key="STRUTS_TOOLS_AVAILABLE">false</data>
 	<toolbox scope="application">
-		<tool key="validatorTool" class="org.apache.velocity.tools.generic.ValidatorTool"
-			validator_key.prefix="v_" />
 		<tool key="displayTool" class="org.apache.velocity.tools.generic.DisplayTool" />
 		<tool key="escTool" class="org.apache.velocity.tools.generic.EscapeTool" />
 		<tool key="dateTool" class="org.apache.velocity.tools.generic.DateTool" />
@@ -12,9 +10,10 @@
 		<tool key="noescStringTool" class="com.buyi.util.StringTool" />
 	</toolbox>
 	<toolbox scope="request">
-		<tool key="beanTool" class="org.apache.velocity.tools.view.SpringBeanTool" config-file="/WEB-INF/springbean-tool.properties" />
+		<tool key="userInfoTool" class="org.springframework.velocity.tools.UserInfoTool" />
+		<tool key="controller" class="org.springframework.velocity.tools.ControllerTool" />
+		<tool key="paramsTool" class="org.apache.velocity.tools.view.ParameterTool" />
 		<tool key="urlUtil" class="com.buyi.util.UrlUtil" />
-		<tool key="securityTool" class="com.buyi.webapp.tools.SecurityTool" />
-		<tool key="userInfoTool" class="com.buyi.webapp.tools.UserInfoTool" />
+		<tool key="securityTool" class="org.springframework.velocity.tools.SecurityTool" />
 	</toolbox>
 </tools>

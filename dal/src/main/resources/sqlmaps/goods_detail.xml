@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="goods_detail">
+	<typeAlias alias="money"          type="com.buyi.dal.entity.viewobject.Money" />
+	<typeAlias alias="moneyHandler"   type="com.buyi.dal.handler.MoneyTypeHandler" />
+	<typeAlias alias="goodsStatus"    type="com.buyi.dal.entity.viewobject.GoodsStatus" />
+	<typeAlias alias="goodsDetailDO"  type="com.buyi.dal.entity.dataobject.GoodsDetailDO" />
+
+	<resultMap id="goodsDetailResult" class="goodsDetailDO">
+		<result column="id"              property="id"          javaType="java.lang.Long" />
+		<result column="title"           property="title"       javaType="java.lang.String" />
+		<result column="origin_price"    property="originPrice" javaType="money"      typeHandler="moneyHandler" />
+		<result column="postfee"         property="postfee"     javaType="java.lang.String" />
+		<result column="goods_pic1"      property="goodsPic1"   javaType="java.lang.String" />
+		<result column="goods_pic2"      property="goodsPic2"   javaType="java.lang.String" />
+		<result column="goods_pic3"      property="goodsPic3"   javaType="java.lang.String" />
+		<result column="goods_desc"      property="goodsDesc"   javaType="java.lang.String" />
+		<result column="status"          property="status"      javaType="goodsStatus" />
+		<result column="category_id"     property="categoryId"  javaType="java.lang.Long" />
+		<result column="gmt_create"      property="gmtCreate"   javaType="java.util.Date" />
+		<result column="gmt_modified"    property="gmtModified" javaType="java.util.Date" />
+	</resultMap>
+	<resultMap id="smallGoodsDetailResult" class="goodsDetailDO">
+		<result column="id"              property="id"          javaType="java.lang.Long" />
+		<result column="title"           property="title"       javaType="java.lang.String" />
+		<result column="origin_price"    property="originPrice" javaType="money"      typeHandler="moneyHandler" />
+		<result column="goods_pic1"      property="goodsPic1"   javaType="java.lang.String" />
+		<result column="goods_pic2"      property="goodsPic2"   javaType="java.lang.String" />
+		<result column="goods_pic3"      property="goodsPic3"   javaType="java.lang.String" />
+		<result column="status"          property="status"      javaType="goodsStatus" />
+		<result column="category_id"     property="categoryId"  javaType="java.lang.Long" />
+		<result column="gmt_create"      property="gmtCreate"   javaType="java.util.Date" />
+		<result column="gmt_modified"    property="gmtModified" javaType="java.util.Date" />
+	</resultMap>
+
+	<insert id="GOODS_DETAIL_INSERT" parameterClass="goodsDetailDO">
+	<![CDATA[ 
+	insert into goods_detail (
+		title,
+		origin_price,
+		postfee,
+		goods_pic1,
+		goods_pic2,
+		goods_pic3,
+		goods_desc,
+		status,
+		category_id,
+		gmt_create,
+		gmt_modified
+	) values (
+		#title#,
+		#originPrice,handler=moneyHandler#,
+		#postfee#,
+		#goodsPic1#,
+		#goodsPic2#,
+		#goodsPic3#,
+		#goodsDesc#,
+		#status#,
+		#categoryId#,
+		now(),
+		now()
+    )		
+	]]>
+		<selectKey resultClass="java.lang.Long" keyProperty="id"
+			type="post">select last_insert_id();</selectKey>
+	</insert>
+
+	<update id="UPDATE_GOODS_DETAIL_INFO" parameterClass="goodsDetailDO">
+		<![CDATA[ 
+		update goods_detail set gmt_modified = now()
+		]]>
+		<isNotNull prepend="," property="title">
+			title = #title#
+		</isNotNull>
+		<isNotNull prepend="," property="originPrice">
+			origin_price = #originPrice,handler=moneyHandler#
+		</isNotNull>
+		<isNotNull prepend="," property="postfee">
+			postfee = #postfee#
+		</isNotNull>
+		<isNotNull prepend="," property="goodsPic1">
+			goods_pic1 = #goodsPic1#
+		</isNotNull>
+		<isNotNull prepend="," property="goodsPic2">
+			goods_pic2 = #goodsPic2#
+		</isNotNull>
+		<isNotNull prepend="," property="goodsPic3">
+			goods_pic3 = #goodsPic3#
+		</isNotNull>
+		<isNotNull prepend="," property="status">
+			status = #status#
+		</isNotNull>
+		<isNotNull prepend="," property="goodsDesc">
+			goods_desc = #goodsDesc#
+		</isNotNull>
+		<isNotNull prepend="," property="categoryId">
+			category_id = #categoryId#
+		</isNotNull>
+		<![CDATA[ 
+		where id = #id#
+		]]>
+	</update>
+
+	<select id="QUERY_GOODS_DETAIL_BY_IDS" parameterClass="java.util.List" resultMap="goodsDetailResult">
+	<![CDATA[
+		select 
+			id,
+			title,
+			origin_price,
+			postfee,
+			goods_pic1,
+			goods_pic2,
+			goods_pic3,
+			goods_desc,
+			status,
+			category_id,
+			gmt_create,
+			gmt_modified
+		from
+			goods_detail
+		where
+			id in
+	]]>
+		<iterate open="(" close=")" conjunction=",">#ids[]#</iterate>
+    <![CDATA[ order by id desc]]>
+	</select>
+
+	<select id="QUERY_SMALL_GOODS_DETAIL_BY_TITLE" parameterClass="java.util.Map" resultMap="smallGoodsDetailResult">
+	<![CDATA[
+		select 
+			id,
+			title,
+			origin_price,
+			goods_pic1,
+			goods_pic2,
+			goods_pic3,
+			status,
+			category_id,
+			gmt_create,
+			gmt_modified
+		from
+			goods_detail
+	]]>
+		<dynamic prepend="where">
+		<isNotEmpty prepend=" AND " property="title">
+			title like concat('%',#title#,'%')
+		</isNotEmpty>
+		</dynamic>
+		<![CDATA[
+		    order by id desc
+			limit #startRow#, #pageSize#
+		]]>
+	</select>
+	<select id="COUNT_GOODS_DETAIL_BY_TITLE" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+	<![CDATA[
+		select 
+			count(*)
+		from
+			goods_detail
+	]]>
+		<dynamic prepend="where">
+		<isNotEmpty prepend=" AND " property="title">
+			title like concat('%',#title#,'%')
+		</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	
+	<select id="QUERY_SMALL_GOODS_DETAIL_BY_TITLE_UNLIKE" parameterClass="java.util.Map" resultMap="smallGoodsDetailResult">
+	<![CDATA[
+		select 
+			id,
+			title,
+			origin_price,
+			goods_pic1,
+			goods_pic2,
+			goods_pic3,
+			status,
+			category_id,
+			gmt_create,
+			gmt_modified
+		from
+			goods_detail
+		where
+		 	title = #title# and category_id = #categoryId#
+		 limit 0, 1
+	]]>
+	</select>
+
+</sqlMap>

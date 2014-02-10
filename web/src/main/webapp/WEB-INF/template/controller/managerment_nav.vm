@@ -1,0 +1,20 @@
+<div>
+	<div class="category_title">
+		导航栏
+	</div>
+	#set($categoryNames = ['卖出的宝贝','发布宝贝','宝贝管理'])
+	#set($categoryLinks =[$urlUtil.MANAGER_INDEX,$urlUtil.PUBLISH_GOODS,$urlUtil.SEARCH_GOODS])
+	#set($i = 0)
+	#foreach($category in $categoryNames)
+	<a href="$!categoryLinks.get($i)">
+		#if($i == $index)
+			<div class="category_info selected">
+		#else
+			<div class="category_info">
+		#end
+			$category
+		</div>
+		</a>
+		#set($i=$i+1)
+	#end
+</div>

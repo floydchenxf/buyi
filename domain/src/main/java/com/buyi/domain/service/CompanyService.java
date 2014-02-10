@@ -2,12 +2,11 @@ package com.buyi.domain.service;
 
 import java.util.List;
 
-import net.sf.ehcache.util.ProductInfo;
-
 import com.buyi.dal.entity.dataobject.CompanyDO;
 import com.buyi.dal.entity.dataobject.CompanyProductDO;
 import com.buyi.dal.entity.dataobject.ProductTypeDO;
 import com.buyi.dal.entity.viewobject.CompanyVO;
+import com.buyi.dal.entity.viewobject.ProductTypeVO;
 
 public interface CompanyService {
 
@@ -27,7 +26,7 @@ public interface CompanyService {
 	 * @param companyId
 	 * @return
 	 */
-	List<ProductTypeDO> queryProductTypes(Long companyId);
+	List<ProductTypeDO> queryProductTypes(Long companyId, int startRow, int pageSize);
 
 	/**
 	 * 获取类型公司商品
@@ -47,5 +46,7 @@ public interface CompanyService {
 	 * @return
 	 */
 	Long insertProduct(CompanyProductDO productDO);
+	
+	List<ProductTypeVO> queryTopProductVOs(Long companyId, int startRow, int pageSize);
 
 }

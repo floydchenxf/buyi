@@ -1,0 +1,2 @@
+$controller.setController('testController').setParameter('id',5)
+hello $user

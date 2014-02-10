@@ -85,8 +85,4 @@ public class UserDetail implements UserDetails {
 	public Long getId() {
 		return this.jkUserDO == null ? null : this.jkUserDO.getId();
 	}
-
-	public String getProfileImage() {
-		return this.jkUserDO == null ? null : this.jkUserDO.getProfileImage();
-	}
 }

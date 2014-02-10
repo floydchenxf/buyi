@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -20,6 +18,7 @@ import com.buyi.dal.entity.dataobject.CompanyProductDO;
 import com.buyi.dal.entity.dataobject.ProductTypeDO;
 import com.buyi.dal.entity.dataobject.UserDO;
 import com.buyi.dal.entity.viewobject.CompanyVO;
+import com.buyi.dal.entity.viewobject.ProductTypeVO;
 import com.buyi.domain.service.CompanyService;
 import com.buyi.domain.service.UserService;
 import com.buyi.domain.service.impl.SecurityPasswdConstant;
@@ -47,11 +46,9 @@ public class BuyiWBController {
 
 	@RequestMapping(value = { UrlUtil.BUYI_WB_LOGIN }, method = RequestMethod.POST)
 	public @ResponseBody
-	LoginVO login(@RequestParam("uname") String name,
-			@RequestParam("upwd") String pwd) {
+	LoginVO login(@RequestParam("uname") String name, @RequestParam("upwd") String pwd) {
 		LoginVO loginVO = new LoginVO();
-		if (name == null || name.trim().equals("") || pwd == null
-				|| pwd.trim().equals("")) {
+		if (name == null || name.trim().equals("") || pwd == null || pwd.trim().equals("")) {
 			loginVO.setMessage("请输入用户名和密码!");
 			return loginVO;
 		}
@@ -69,8 +66,7 @@ public class BuyiWBController {
 			return loginVO;
 		}
 
-		String resultMessage = pwdEncoder.encode(SecurityPasswdConstant
-				.encodingPasswd(name, pwd));
+		String resultMessage = pwdEncoder.encode(SecurityPasswdConstant.encodingPasswd(name, pwd));
 		loginVO.setMessage(resultMessage);
 		loginVO.setSuccess(true);
 		loginVO.setUserDO(user);
@@ -86,40 +82,36 @@ public class BuyiWBController {
 
 	@RequestMapping(value = { UrlUtil.BUYI_WB_PRODUCT_TYPE })
 	public @ResponseBody
-	List<ProductTypeDO> queryProductTypes(
-			@RequestParam("company_id") Long companyId) {
-		List<ProductTypeDO> productTypeDOs = companyService
-				.queryProductTypes(companyId);
+	List<ProductTypeDO> queryProductTypes(@RequestParam("company_id") Long companyId) {
+		List<ProductTypeDO> productTypeDOs = companyService.queryProductTypes(companyId, 0, 12);
 		return productTypeDOs;
+	}
 
+	@RequestMapping(value = { UrlUtil.BUYI_WB_TOP_PRODUCT_TYPE })
+	public @ResponseBody
+	List<ProductTypeVO> queryTopProductTypes(@RequestParam("company_id") Long companyId, @RequestParam(value = "page_no", defaultValue = "1") int pageNo) {
+		int startRow = (pageNo - 1) * 6;
+		List<ProductTypeVO> topProductVOs = companyService.queryTopProductVOs(companyId, startRow, 6);
+		return topProductVOs;
 	}
 
 	@RequestMapping(value = { UrlUtil.BUYI_WB_PRODUCT })
 	public @ResponseBody
-	List<CompanyProductDO> queryProduct(@RequestParam("type_id") Long typeId,
-			@RequestParam(value = "page_no", defaultValue = "1") int pageNo) {
+	List<CompanyProductDO> queryProduct(@RequestParam("type_id") Long typeId, @RequestParam(value = "page_no", defaultValue = "1") int pageNo) {
 		int startRow = (pageNo - 1) * PAGE_SIZE;
-		List<CompanyProductDO> companyProductDOs = companyService
-				.queryProductsByCondition(typeId, startRow, PAGE_SIZE);
+		List<CompanyProductDO> companyProductDOs = companyService.queryProductsByCondition(typeId, startRow, PAGE_SIZE);
 		return companyProductDOs;
 	}
 
 	@RequestMapping(value = { UrlUtil.BUYI_WB_PRODUCT_PUBLISHED })
 	public @ResponseBody
-	ProductPublishedVO publishProduct(
-			@RequestParam(value = "user_id", required = false) String userId,
-			@RequestParam("product_name") String productName,
-			@RequestParam("product_num") String productNum,
-			@RequestParam("product_price") String productPrice,
-			@RequestParam("product_intro") String productIntro,
-			@RequestParam("product_pic") MultipartFile pic) {
+	ProductPublishedVO publishProduct(@RequestParam(value = "user_id", required = false) String userId, @RequestParam("product_name") String productName, @RequestParam("product_num") String productNum, @RequestParam("product_price") String productPrice, @RequestParam("product_intro") String productIntro, @RequestParam("product_pic") MultipartFile pic) {
 		ProductPublishedVO productPublishedVO = new ProductPublishedVO();
 		String fileName = null;
 		if (pic != null) {
 			try {
 				fileName = pic.getName() + "_" + new Date().getTime() + ".jpg";
-				File destFile = new File(fileUploadInfo.getFile()
-						+ File.separator + fileName);
+				File destFile = new File(fileUploadInfo.getImagePath(fileName));
 				pic.transferTo(destFile);
 			} catch (IOException e) {
 				productPublishedVO.setMessage("文件上传失败,错误信息:" + e.getMessage());

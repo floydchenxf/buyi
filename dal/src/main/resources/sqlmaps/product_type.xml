@@ -13,7 +13,7 @@
 		<result column="gmt_modified"        property="gmtModified"            javaType="java.util.Date" />
 	</resultMap>
 	
-	<select id="QUERY-PRODUCT-TYPE-BY-COMPANY-ID" parameterClass="long" resultMap="byProductTypeResult">
+	<select id="QUERY-PRODUCT-TYPE-BY-COMPANY-ID" parameterClass="map" resultMap="byProductTypeResult">
 	<![CDATA[ 
 	   select 
 	       id,
@@ -28,7 +28,7 @@
 	       company_id = #companyId#
 	   order by
 	       gmt_create desc,id desc
-	   limit 0,12
+	   limit #startRow#,#pageSize#
 	   ]]>
 	</select>
 </sqlMap>

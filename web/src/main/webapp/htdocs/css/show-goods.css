@@ -1,0 +1,118 @@
+.img-preview {
+	border:1px solid #ddd;
+	width:340px;
+	height:340px;
+	vertical-align:middle;
+	display: table-cell;
+	text-align:center;
+	font-size:0;
+}
+
+.goods-title {
+	font-size:16px;
+	line-height:32px;
+	font-weight:700;
+	border-bottom:1px dotted #ddd;
+}
+
+.goods-info {
+	font-size:14px;
+	padding-top:10px;
+}
+
+.goods-info .goods-item {
+	line-height:28px;
+}
+
+.goods-price {
+	color:red;
+	font-size:16px;
+}
+
+.goods-line {
+	height:30px;
+}
+
+.goods-desc {
+	border:1px solid #ddd;
+	padding:0 30px;
+}
+
+.tiny-image {
+	margin-top:8px;
+	margin-right:8px;
+	float:left;
+	cursor:hand;
+}
+
+.tiny-image .box {
+	border: 1px solid #ddd;
+	width: 60px;
+	height: 60px;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	font-size:0;
+}
+
+.goods-type-row {
+	margin-bottom:12px;
+}
+
+.goods-type-pic {
+	margin-right:8px;
+	float:left;
+	cursor:hand;
+	text-align:center;
+}
+
+.goods-type-add {
+	border:1px solid #ddd;
+	width:40px;
+	height:40px;
+	text-align:center;
+	font-size:21px;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.goods-type-item {
+	border:1px solid #ddd;
+	width:40px;
+	height:40px;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	font-size:0;
+}
+
+.hover-show {
+	position: relative;
+}
+
+.hover-showed {
+	position: absolute;
+	z-index: 5000;
+	opacity: 0.9;
+	background-color: white;
+	top:20px;
+	width:42px;
+	text-align:center;
+	display:none;
+}
+
+.hover-showed-delete {
+	position: absolute;
+	display:none;
+	z-index: 5001;
+	opacity: 0.9;
+	background-color: white;
+	top:-5px;
+	left:36px;
+}
+
+.hover-show:hover .hover-showed, .hover-show:hover .hover-showed-delete {
+	display:block;
+}
+

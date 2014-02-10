@@ -1,0 +1,20 @@
+#*
+@param pageUrl 注意：url结尾要加上一个url连接符： & 或者 ?
+@param pageable
+*#
+#if($pageable.getTotalPages()>0)
+    #set ( $pages = $pageable.getPageArray())
+	<ul class="row">
+		<li class="w20">
+    		#foreach ($p in $pages)
+    			#if($p >=0 && $p!=$pageable.getPageNumber())
+    				<a href="$pageUrl&page.page=${p}" target="_self">$pageable.plus1($p)</a>
+    			#elseif($p == $pageable.getPageNumber())
+    				<a href="javascript:;" class="current" target="_self">$pageable.plus1($p)</a>
+    			#else
+    				<a href="javascript:;" class="omit" target="_self">...</a>
+    			#end
+    		#end
+		</li>
+	</ul>
+#end

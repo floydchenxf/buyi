@@ -1,0 +1,9 @@
+#foreach($category in $categorys)
+	#set($topName = $!category.categoryName)
+	#set($subCategorys = $category.getSubCategorys())
+	#if(!$subCategorys.isEmpty())
+		#foreach($secCategorys in $subCategorys)
+			$!topName -------- $!secCategorys.categoryName<br>
+		#end
+	#end
+#end

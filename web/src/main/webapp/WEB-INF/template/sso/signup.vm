@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>欢迎注册布艺市场</title>
+	</head>
+	<body>
+		<form name="signupForm"  method="post">
+			#springBind("signupForm.uname")
+			用户<input type="text" id="uname" name="${status.expression}" value="$!{status.value}"><font color="red">$status.errorMessage</font><br>
+			
+			#springBind("signupForm.pwd")
+			密码<input type="password" name="${status.expression}"><font color="red">$status.errorMessage</font><br>
+			
+			#springBind("signupForm.confirmPwd")
+			确认密码<input type="password" name="${status.expression}"><font color="red">$status.errorMessage</font><br>
+			<input type="submit" name="提交">
+			<input type="reset" name="重置">
+		</form>
+	<body>
+</html>

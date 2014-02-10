@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>华强布艺商城</title>
+	<script>
+        $(function () {
+			var picObject = $('#pic-name-value');
+			picObject.val('');
+			
+            $("#up").uploadPreview({ imgPreview: "#image-pre", width:80,height:80, callback:function(path){
+				var l = path.lastIndexOf('\\');
+				if (l > 0) {
+					path = path.substring(l+1);
+				}
+				$('#file-name1').html(path);
+				picObject.val(path);
+			}
+			});
+			
+			$('#type-add-button').click(function() {
+				var errors = false;
+				var picNameValue = $('#pic-name-value').val();
+				var picNameInfo = $('#pic-name-error-info');
+				if (picNameValue =='') {
+					picNameInfo.html('请选择图片!');
+					errors = true;
+				} else {
+					picNameInfo.html('');
+				}
+				
+				var typeNameInfo = $('#type-name-error-info');
+				var typeNameValue = $('#type-name-value').val();
+				if ( typeNameValue == '') {
+					typeNameInfo.html('请输入类型名称');
+					errors = true;
+				} else if (typeNameValue.length > 6) {
+					typeNameInfo.html('类型名称超过6个字符!');
+					errors = true;
+				} else {
+					typeNameInfo.html('');
+				}
+				
+				var goodsNumValue = $('#goods-num-value').val();
+				var goodsNumInfo = $('#goods-num-error-info');
+				if (goodsNumValue == '') {
+					goodsNumInfo.html('请输入商品数量!');
+					errors = true;
+				} else if (goodsNumValue <=0) {
+					goodsNumInfo.html('商品数量必须大于0!');
+					errors = true;
+				} else if (isNaN(goodsNumValue)) {
+					goodsNumInfo.html('请输入数字!');
+					errors = true;
+				} else {
+					goodsNumInfo.html('');
+				}
+				
+				if (errors) {
+					return false;
+				}
+				
+				$('#type-add-form').submit();
+			});
+		})
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="w16">
+			<form name="type-add-form" action="$urlUtil.GOODS_TYPE_ADD" method="post" enctype="multipart/form-data" id="type-add-form">
+			<div class="row">
+				<div class="column">
+					类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：
+				</div>
+				<div class="column">
+					<div class="goods-pics" style="position:relative;">
+						<img id="image-pre" width="80" height="80">
+						<div style="position: absolute;bottom:0px;left:0px;height:24px;width:80px;background-color:#fff;opacity:0.5;filter:alpha(opacity=50);text-align:center">上传图片</div>
+						<input type="file" id="up" name="imageupload" style="position:absolute;opacity:0;filter:alpha(opacity=0);  ;width:80px;height:80px;bottom:0px;left:0px;"/>
+					</div>
+					<div id="file-name1" style="width:80px; height:20px;text-align:center;overflow:hidden;"></div>
+					#springBind("goodsTypeForm.picName")
+					<input type="hidden" name="${status.expression}" value="$!{status.value}" id="pic-name-value">
+				</div>
+				<div class="column">
+					<font color="red" id="pic-name-error-info">$status.errorMessage</font>
+				</div>
+			</div>
+			#springBind("goodsTypeForm.goodsId")
+			<input type="hidden" name="${status.expression}" value="$!{status.value}">
+			
+			<div class="row">
+				#springBind("goodsTypeForm.typeName")
+				<div class="column">
+					名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：
+				</div>
+				<div class="column">
+					<input type="text" name="${status.expression}" value="$!{status.value}" id="type-name-value">
+					<font color="red" id="type-name-error-info">$status.errorMessage</font>
+				</div>
+			</div>
+			
+			<div class="row">
+				#springBind("goodsTypeForm.goodsNum")
+				<div class="column">
+					数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量：
+				</div>
+				<div class="column">
+					<input type="text" name="${status.expression}" value="$!{status.value}" id="goods-num-value">
+					<font color="red" id="goods-num-error-info">$status.errorMessage</font>
+				</div>
+			</div>
+			<div class="row">
+				<div class="w5 alpha">
+					<input type="button" value="确认" id="type-add-button">
+				</div>
+				<div class="w6 omega">
+					<input type="reset" value="取消" class="jqmClose">
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

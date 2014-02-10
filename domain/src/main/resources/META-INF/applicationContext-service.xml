@@ -19,4 +19,56 @@
 	<bean id="fileUploadInfo" class="com.buyi.domain.vo.FileUploadInfo">
 	    <property name="filePath" value="${file.upload.directory}"/>
 	</bean>
+	
+	<bean id="defaultChinaAnalyzer" class="org.wltea.analyzer.lucene.IKAnalyzer" />
+	
+	<bean id="simpleAnalyzer" class="org.apache.lucene.analysis.SimpleAnalyzer">
+		<constructor-arg index="0" type="org.apache.lucene.util.Version" value="LUCENE_35" />
+	</bean>
+	
+	<bean id="standardAnalyzer" class="org.apache.lucene.analysis.standard.StandardAnalyzer">
+		<constructor-arg index="0" type="org.apache.lucene.util.Version" value="LUCENE_35" />
+	</bean>
+	
+	<bean id="perFieldAnalyzerWrapper" class="org.apache.lucene.analysis.PerFieldAnalyzerWrapper">
+		<constructor-arg index="0">
+			<ref bean="defaultChinaAnalyzer" />
+		</constructor-arg>
+		<constructor-arg index="1">
+			<map>
+				<entry key="tag" value-ref="simpleAnalyzer" />
+				<entry key="friendsDim1" value-ref="standardAnalyzer" />
+				<entry key="friendsDim2" value-ref="standardAnalyzer" />
+				<entry key="name" value-ref="standardAnalyzer" />
+				<entry key="searchName" value-ref="standardAnalyzer" />
+				<entry key="nickName" value-ref="standardAnalyzer" />
+			</map>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="logDocMergePolicy" class="org.apache.lucene.index.LogDocMergePolicy" scope="prototype">
+		<property name="minMergeDocs" value="10" />
+		<property name="mergeFactor" value="10" />
+		<property name="maxMergeDocs" value="1000" />
+		<property name="useCompoundFile" value="true" />
+	</bean>
+	
+	<bean id="indexWriterConfig" class="org.apache.lucene.index.IndexWriterConfig" scope="prototype">
+		<constructor-arg index="0" type="org.apache.lucene.util.Version" value="LUCENE_35" />
+		<constructor-arg index="1">
+			<ref bean="perFieldAnalyzerWrapper" />
+		</constructor-arg>
+		<property name="mergePolicy">
+			<ref bean="logDocMergePolicy" />
+		</property>
+	</bean>
+	
+	<bean id="indexWriterManager" class="com.buyi.domain.service.search.write.IndexWriterManager" destroy-method="colseAll">
+		<lookup-method name="generateIndexWriterConfig" bean="indexWriterConfig" />
+		<property name="basePath" value="${buyi.lucene.path}" />
+	</bean>
+	
+	<bean id="indexReaderManager" class="com.buyi.domain.service.search.read.IndexReaderManager" destroy-method="colseAll">
+		<property name="basePath" value="${buyi.lucene.path}" />
+	</bean>
 </beans>
