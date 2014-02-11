@@ -32,6 +32,7 @@ import com.buyi.dal.entity.viewobject.PostfeeVO;
 import com.buyi.domain.service.CategoryService;
 import com.buyi.domain.service.GoodsDetailService;
 import com.buyi.domain.service.GoodsTypeService;
+import com.buyi.domain.service.search.write.GoodsDetailIndexBuildService;
 import com.buyi.domain.vo.CategoryVO;
 import com.buyi.domain.vo.FileUploadInfo;
 import com.buyi.util.UrlUtil;
@@ -55,9 +56,12 @@ public class GoodsManagerController {
 
 	@Autowired
 	private GoodsDetailService goodsDetailService;
-	
+
 	@Autowired
 	private GoodsTypeService goodsTypeService;
+
+	@Autowired
+	private GoodsDetailIndexBuildService goodsDetailIndexBuildService;
 
 	@RequestMapping(value = { UrlUtil.MANAGER_INDEX })
 	public void managerIndex() {
@@ -188,8 +192,10 @@ public class GoodsManagerController {
 						final String smallFile = fileUploadInfo.getSmallImagePath(fileName);
 						String bigFile = fileUploadInfo.getImagePath(fileName);
 						String tinyFile = fileUploadInfo.getTinyImagePath(fileName);
+						String searchFile = fileUploadInfo.getSearchImagePath(fileName);
 						Thumbnails.of(file.getInputStream()).size(800, 2000).toFile(bigFile);
 						new GeneratorImageThread(file.getInputStream(), 330, 330, smallFile);
+						new GeneratorImageThread(file.getInputStream(), 190, 190, searchFile);
 						new GeneratorImageThread(file.getInputStream(), 60, 60, tinyFile);
 					} catch (IOException e) {
 						logger.error(e.getMessage());
@@ -272,7 +278,7 @@ public class GoodsManagerController {
 			}
 			model.addAttribute("categoryList", categoryList);
 		}
-		
+
 		List<GoodsTypeDO> goodsTypes = goodsTypeService.fetchGoodsTypesByGoodsId(goodsId);
 		model.addAttribute("goodsTypes", goodsTypes);
 	}
@@ -335,7 +341,7 @@ public class GoodsManagerController {
 		goodsDetailService.updateGoodsDetail(goodsDetail);
 		return "redirect:" + UrlUtil.SEARCH_GOODS;
 	}
-	
+
 	/**
 	 * 商品类型添加
 	 * 
@@ -347,29 +353,31 @@ public class GoodsManagerController {
 		goodsTypeForm.setGoodsId(goodsId);
 		model.addAttribute("goodsTypeForm", goodsTypeForm);
 	}
-	
+
 	@RequestMapping(value = { UrlUtil.GOODS_TYPE_ADD }, method = RequestMethod.POST)
 	public String goodsTypeAdd(@Valid GoodsTypeForm goodsTypeForm, BindingResult result, @RequestParam MultipartFile imageupload) {
 		if (result.hasErrors()) {
 			return UrlUtil.GOODS_TYPE_ADD;
 		}
-		
+
 		if (imageupload == null) {
 			FieldError uploadFileError = new FieldError("goodsTypeForm", "picName", null, false, new String[] { "goods.picname.uploadfile" }, null, "请上传文件!");
 			result.addError(uploadFileError);
 			return UrlUtil.GOODS_TYPE_ADD;
 		}
 
-//		if (imageupload.getSize() > MAX_UPLOAD_FILE_SIZE) {
-//			FieldError overMaxFieldError = new FieldError("goodsTypeForm", "picName", null, false, new String[] { "goods.picname.overmax" }, null, "请上传超过1M");
-//			result.addError(overMaxFieldError);
-//			return UrlUtil.GOODS_TYPE_ADD;
-//		}
-		
+		// if (imageupload.getSize() > MAX_UPLOAD_FILE_SIZE) {
+		// FieldError overMaxFieldError = new FieldError("goodsTypeForm",
+		// "picName", null, false, new String[] { "goods.picname.overmax" },
+		// null, "请上传超过1M");
+		// result.addError(overMaxFieldError);
+		// return UrlUtil.GOODS_TYPE_ADD;
+		// }
+
 		Long goodsId = goodsTypeForm.getGoodsId();
 		Integer goodsNum = goodsTypeForm.getGoodsNum();
 		String typeName = goodsTypeForm.getTypeName();
-		
+
 		String fileName = null;
 		try {
 			fileName = imageupload.getName() + "_" + new Date().getTime() + ".jpg";
@@ -380,7 +388,7 @@ public class GoodsManagerController {
 		} catch (IOException e) {
 			logger.error(e.getMessage());
 		}
-		
+
 		GoodsTypeDO typeDO = new GoodsTypeDO();
 		typeDO.setGoodsId(goodsId);
 		typeDO.setGoodsNum(goodsNum);
@@ -389,18 +397,18 @@ public class GoodsManagerController {
 		goodsTypeService.insertGoodsType(typeDO);
 		return "redirect:" + UrlUtil.getBackendUrl(UrlUtil.SHOW_GOODS, true).pm("id", goodsId);
 	}
-	
+
 	/**
 	 * 商品类型编辑显示
 	 * 
 	 */
-	@RequestMapping(value={UrlUtil.GOODS_TYPE_EDIT}, method=RequestMethod.GET)
-	public void showEditGoodsType(Model model, @RequestParam(value="id", required=true)Long id) {
+	@RequestMapping(value = { UrlUtil.GOODS_TYPE_EDIT }, method = RequestMethod.GET)
+	public void showEditGoodsType(Model model, @RequestParam(value = "id", required = true) Long id) {
 		GoodsTypeDO typeDO = goodsTypeService.loadGoodsTypeById(id);
 		if (typeDO == null) {
 			return;
 		}
-		
+
 		GoodsTypeForm typeForm = new GoodsTypeForm();
 		typeForm.setGoodsId(typeDO.getGoodsId());
 		typeForm.setGoodsNum(typeDO.getGoodsNum());
@@ -409,13 +417,13 @@ public class GoodsManagerController {
 		typeForm.setTypeName(typeDO.getTypeName());
 		model.addAttribute("goodsTypeForm", typeForm);
 	}
-	
-	@RequestMapping(value={UrlUtil.GOODS_TYPE_EDIT}, method=RequestMethod.POST)
+
+	@RequestMapping(value = { UrlUtil.GOODS_TYPE_EDIT }, method = RequestMethod.POST)
 	public String editGoodsType(@Valid GoodsTypeForm goodsTypeForm, BindingResult result) {
 		if (result.hasErrors()) {
 			return UrlUtil.GOODS_TYPE_EDIT;
 		}
-		
+
 		Long id = goodsTypeForm.getId();
 		Long goodsId = goodsTypeForm.getGoodsId();
 		GoodsTypeDO typeDO = goodsTypeService.loadGoodsTypeById(id);
@@ -429,10 +437,10 @@ public class GoodsManagerController {
 		goodsTypeService.updateGoodsType(typeDO);
 		return "redirect:" + UrlUtil.getBackendUrl(UrlUtil.SHOW_GOODS, true).pm("id", goodsId);
 	}
-	
-	
-	@RequestMapping(value={UrlUtil.GOODS_TYPE_DELETE}, method=RequestMethod.GET)
-	public @ResponseBody JsonResult deleteGoodsType(@RequestParam(value="id", required=true)Long id) {
+
+	@RequestMapping(value = { UrlUtil.GOODS_TYPE_DELETE }, method = RequestMethod.GET)
+	public @ResponseBody
+	JsonResult deleteGoodsType(@RequestParam(value = "id", required = true) Long id) {
 		JsonResult result = new JsonResult();
 		boolean deleteSuccess = goodsTypeService.deleteGoodsType(id);
 		result.setSuccess(deleteSuccess);
@@ -441,7 +449,38 @@ public class GoodsManagerController {
 		}
 		return result;
 	}
-	
+
+	@RequestMapping(value = { UrlUtil.PUBLISH_GOODS_DETAIL }, method = RequestMethod.GET)
+	public @ResponseBody
+	JsonResult publishGoodsDetails(@RequestParam(value = "id", required = true) Long id) {
+		JsonResult result = new JsonResult();
+		// FIXME 后期按照查询数量来提高性能
+		List<GoodsTypeDO> goodsTypeDOs = goodsTypeService.fetchGoodsTypesByGoodsId(id);
+		if (goodsTypeDOs == null || goodsTypeDOs.isEmpty()) {
+			result.setSuccess(false);
+			result.setMessage("请设置至少一个商品类型才能发布!");
+			return result;
+		}
+
+		GoodsDetailDO goodsDetail = goodsDetailService.queryGoodsDetailById(id);
+		if (goodsDetail == null) {
+			result.setSuccess(false);
+			result.setMessage("商品不存在，请检查!");
+			return result;
+		}
+		// 构建索引
+		goodsDetail.setStatus(GoodsStatus.ONLINE);
+		boolean updateSuccess = goodsDetailService.updateGoodsDetail(goodsDetail);
+		if (!updateSuccess) {
+			result.setSuccess(false);
+			result.setMessage("发布商品不成功!请联系管理员");
+		} else {
+			result.setSuccess(true);
+			goodsDetailIndexBuildService.buildGoodsIndex(goodsDetail, false);
+		}
+
+		return result;
+	}
 
 	/**
 	 * 生成缩略图线程

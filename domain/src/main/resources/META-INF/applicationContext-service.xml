@@ -36,12 +36,8 @@
 		</constructor-arg>
 		<constructor-arg index="1">
 			<map>
-				<entry key="tag" value-ref="simpleAnalyzer" />
-				<entry key="friendsDim1" value-ref="standardAnalyzer" />
-				<entry key="friendsDim2" value-ref="standardAnalyzer" />
-				<entry key="name" value-ref="standardAnalyzer" />
-				<entry key="searchName" value-ref="standardAnalyzer" />
-				<entry key="nickName" value-ref="standardAnalyzer" />
+				<entry key="categoryNames" value-ref="simpleAnalyzer" />
+				<entry key="goodsDesc" value-ref="standardAnalyzer" />
 			</map>
 		</constructor-arg>
 	</bean>

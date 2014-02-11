@@ -58,6 +58,20 @@
 					
 				});
 				
+				$('#goods-detail-publish').click(function() {
+					var inputObj = $(this);
+					inputObj.attr("disabled",true); 
+					var data = $(this).attr('data-item');
+					$.getJSON("$urlUtil.PUBLISH_GOODS_DETAIL?id="+data, function(data) {
+							if(data.success) {
+								window.location.href='$urlUtil.SEARCH_GOODS';
+							} else {
+								inputObj.attr("disabled",false);
+								alert(data.message);
+							}
+						});
+				});
+				
 			}
 		);
 	</script>
@@ -178,6 +192,12 @@
 			<div class="goods-desc">
 				$goodsDetail.goodsDesc
 			</div>
+			#set($published = ($goodsDetail.status == 'ONLINE'))
+			#if($published == 'false')
+			<div class="goods-publish">
+				<input type="button" id="goods-detail-publish" data-item="$goodsDetail.id" class="button" value="发布">
+			</div>
+			#end
 		</div>
 	</div>
 </body>

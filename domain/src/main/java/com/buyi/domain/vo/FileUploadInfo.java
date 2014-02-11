@@ -40,5 +40,9 @@ public class FileUploadInfo {
 	public String getTinyImagePath(String filename) {
 		return filePath + File.separator + UrlUtil.TINY_IMAGE_PATH + File.separator + filename;
 	}
+	
+	public String getSearchImagePath(String filename) {
+		return filePath + File.separator + UrlUtil.SEARCH_IMAGE_PATH + File.separator + filename;
+	}
 
 }

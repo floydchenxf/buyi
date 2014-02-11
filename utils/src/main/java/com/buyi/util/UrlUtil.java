@@ -35,6 +35,7 @@ public class UrlUtil {
 	public static final String IMAGE_PATH = "image";
 	public static final String SMALL_IMAGE_PATH = "small_image";
 	public static final String TINY_IMAGE_PATH = "tiny_image";
+	public static final String SEARCH_IMAGE_PATH = "search_image";
 
 	private static final String BUYI_CONTEXTPATH = "buyi.contextpath";
 	private static final String BUYI_STATIC_ADDRESS = "buyi.static.address";
@@ -77,6 +78,7 @@ public class UrlUtil {
 	public static final String GOODS_TYPE_ADD = "/managerment/goods_type_add";
 	public static final String GOODS_TYPE_EDIT = "/managerment/goods_type_edit";
 	public static final String GOODS_TYPE_DELETE = "/managerment/goods_type_delete";
+	public static final String PUBLISH_GOODS_DETAIL = "/managerment/goods_detail_publish";
 
 	/**
 	 * 该方法用于前端使用，获取url
@@ -170,13 +172,13 @@ public class UrlUtil {
 	public static String getBigImagePath(String filename) {
 		return getImageServer() + File.separator + IMAGE_PATH + File.separator + filename;
 	}
-	
+
 	public static String getSmallImagePath(String filename) {
-		return getImageServer() + File.separator + SMALL_IMAGE_PATH  + File.separator + filename;
+		return getImageServer() + File.separator + SMALL_IMAGE_PATH + File.separator + filename;
 	}
-	
+
 	public static String getTinyImagePath(String filename) {
-		return getImageServer() + File.separator + TINY_IMAGE_PATH  + File.separator + filename;
+		return getImageServer() + File.separator + TINY_IMAGE_PATH + File.separator + filename;
 	}
 
 	public static void main(String[] args) {
