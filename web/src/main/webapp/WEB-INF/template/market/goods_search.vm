@@ -1,0 +1,11 @@
+<html>
+<head>
+</head>
+<body>
+#if($goodsDetailList)
+	#foreach($goodsDetail in $goodsDetailList)
+		$goodsDetail.title<br>
+	#end
+#end
+</body>
+</html>

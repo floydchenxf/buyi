@@ -37,7 +37,6 @@
 		<constructor-arg index="1">
 			<map>
 				<entry key="categoryNames" value-ref="simpleAnalyzer" />
-				<entry key="goodsDesc" value-ref="standardAnalyzer" />
 			</map>
 		</constructor-arg>
 	</bean>

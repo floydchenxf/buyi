@@ -64,10 +64,10 @@
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-analyzers</artifactId>
 		</dependency>
-		<dependency>
+		<!--dependency>
 	        <groupId>com.paoding</groupId>
 	        <artifactId>paoding-analysis</artifactId>
-        </dependency>
+        </dependency-->
 		<dependency>
 			<groupId>com.browseengine.bobo</groupId>
 			<artifactId>bobo-browse</artifactId>

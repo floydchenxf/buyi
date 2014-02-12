@@ -8,12 +8,13 @@ public class GoodsDetailIndexVO {
 
 	public static final String ID = "id";
 	public static final String GOODS_TITLE = "goodsTitle";
-	private static final String GOODS_DESC = "goodsDesc";
-	private static final String GOODS_PIC = "goodsPic";
-	private static final String GOODS_POSTFEE = "goodsPostfee";
-	private static final String GMT_CREATE = "gmtCreate";
-	private static final String CATEGORY_NAMES = "categoryNames";
-	private static final String ORIGIN_PRICE = "originPrice";
+	public static final String GOODS_DESC = "goodsDesc";
+	public static final String GOODS_PIC = "goodsPic";
+	public static final String GOODS_POSTFEE = "goodsPostfee";
+	public static final String GMT_CREATE = "gmtCreate";
+	public static final String CATEGORY_NAMES = "categoryNames";
+	public static final String ORIGIN_PRICE = "originPrice";
+	public static final String CATEGORY_ID = "categoryId";
 
 	@SearchableProperty(name = ID, index = Index.NO, store = Store.YES)
 	private Long id;
@@ -44,6 +45,17 @@ public class GoodsDetailIndexVO {
 	// 价格
 	@SearchableProperty(name = ORIGIN_PRICE, index = Index.NOT_ANALYZED, store = Store.YES)
 	private Integer originPrice;
+
+	@SearchableProperty(name = CATEGORY_ID, index = Index.NOT_ANALYZED, store = Store.YES)
+	private Long categoryId;
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
 
 	public Long getId() {
 		return id;

@@ -61,7 +61,9 @@ public class UrlUtil {
 	public static final String BUYI_LOGIN = "/sso/login";
 	public static final String BUYI_SIGNUP = "/sso/signup";
 
+	// 市场相关---------------------------------------------
 	public static final String MARKET_INDEX = "/market/index";
+	public static final String MARKET_GOODS_SEARCH = "/market/goods_search";
 
 	// 管理相关-------------------------------------------------
 	public static final String MANAGER_INDEX = "/managerment/index";
@@ -79,6 +81,8 @@ public class UrlUtil {
 	public static final String GOODS_TYPE_EDIT = "/managerment/goods_type_edit";
 	public static final String GOODS_TYPE_DELETE = "/managerment/goods_type_delete";
 	public static final String PUBLISH_GOODS_DETAIL = "/managerment/goods_detail_publish";
+
+	// 用户相关---------------------------------------------------
 
 	/**
 	 * 该方法用于前端使用，获取url
