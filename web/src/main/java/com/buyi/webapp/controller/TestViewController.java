@@ -23,4 +23,23 @@ public class TestViewController implements ViewController {
 		return context;
 	}
 
+	// public static void main(String[] args) {
+	// Reader input = new StringReader("呢绒沙发布艺上传商城");
+	// // 智能分词关闭（对分词的精度影响很大）
+	// IKSegmentation iks = new IKSegmentation(input, false);
+	// Lexeme lexeme = null;
+	// StringBuilder sb = new StringBuilder();
+	//
+	// try {
+	// while ((lexeme = iks.next()) != null) {
+	// sb.append(lexeme.getLexemeText()).append("|");
+	// }
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	//
+	// System.out.println(sb.toString());
+	//
+	// }
+
 }
