@@ -7,10 +7,10 @@
 		#foreach($error in $status.errorMessages) <b> $error </b> <br> #end
 		<form name="loginForm"  method="post">
 			#springBind("loginForm.uname")
-			用户<input type="text" id="uname" name="${status.expression}" value="$!{status.value}"><br>
+			用户<input type="text" id="uname" name="${status.expression}" value="$!{status.value}"> floydchen<br>
 			
 			#springBind("loginForm.pwd")
-			密码<input type="password" name="pwd"><br>
+			密码<input type="password" name="pwd"> cxf128<br>
 			<input type="submit" name="提交">
 			<input type="reset" name="重置">
 		</form>

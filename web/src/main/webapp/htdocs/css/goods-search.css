@@ -1,0 +1,30 @@
+.goods-item {
+	width:230px;
+	padding:5px 0;
+}
+
+.goods-img {
+	display:table-cell;
+	text-align:center;
+	font-size:0px;
+	vertical-align: middle;
+	border:1px solid #eee;
+	width:210px;
+	height:200px;
+	margin:5px 5px 0 5px;
+}
+
+.goods-img:hover {
+	background-color:#eee;
+}
+
+.goods-title {
+	color:blue;
+	font-size:14px;
+	line-height:21px;
+}
+
+.goods-price {
+	font-size:14px;
+	color:red;
+}

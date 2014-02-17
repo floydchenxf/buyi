@@ -11,7 +11,7 @@ import com.buyi.dal.entity.BaseDO;
  * @author cxf128
  * 
  */
-public class CategoryDO extends BaseDO<Long> {
+public class CategoryDO extends BaseDO<Long> implements Comparable<CategoryDO> {
 
 	private static final long serialVersionUID = -685305098120267128L;
 
@@ -75,6 +75,30 @@ public class CategoryDO extends BaseDO<Long> {
 		if (!subCategorys.contains(categoryDO)) {
 			subCategorys.add(categoryDO);
 		}
+	}
+
+	@Override
+	public int compareTo(CategoryDO categoryDO) {
+		if (categoryDO == null) {
+			return -1;
+		}
+		
+		Integer o = categoryDO.getOrder();
+		Integer c_o = this.order;
+		if (c_o == null || o == null) {
+			return -1;
+		}
+		
+		int result = 0;
+		if (c_o > o) {
+			result = 1;
+		} else if (c_o < 0) {
+			result = -1;
+		} else {
+			result = 0;
+		}
+		
+		return result;
 	}
 
 }

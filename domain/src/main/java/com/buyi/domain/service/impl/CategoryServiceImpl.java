@@ -1,6 +1,7 @@
 package com.buyi.domain.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +57,7 @@ public class CategoryServiceImpl implements CategoryService, InitializingBean {
 		CategoryDO category = categoryMap.get(id);
 		if (category != null) {
 			List<CategoryDO> categoryDOs = category.getSubCategorys();
+			Collections.sort(categoryDOs);
 			if (!categoryDOs.isEmpty()) {
 				for (CategoryDO c : categoryDOs) {
 					CategoryVO vo = this.covertObj(c);

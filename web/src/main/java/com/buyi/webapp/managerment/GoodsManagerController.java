@@ -46,7 +46,7 @@ public class GoodsManagerController {
 
 	private static final Logger logger = Logger.getLogger(GoodsManagerController.class);
 
-	private static final Integer MAX_UPLOAD_FILE_SIZE = 1000000;
+	private static final Integer MAX_UPLOAD_FILE_SIZE = 2000000;
 
 	@Autowired
 	private CategoryService categoryService;
@@ -126,7 +126,7 @@ public class GoodsManagerController {
 
 		if (pic.getSize() > MAX_UPLOAD_FILE_SIZE) {
 			fileUploadVO.setError(FileUploadVO.UPLOAD_FAIL);
-			fileUploadVO.setMessage("文件超过1M,请检查");
+			fileUploadVO.setMessage("文件超过2M,请检查");
 			return fileUploadVO;
 		}
 
@@ -383,8 +383,10 @@ public class GoodsManagerController {
 			fileName = imageupload.getName() + "_" + new Date().getTime() + ".jpg";
 			final String smallFile = fileUploadInfo.getSmallImagePath(fileName);
 			String tinyFile = fileUploadInfo.getTinyImagePath(fileName);
-			Thumbnails.of(imageupload.getInputStream()).size(330, 330).toFile(smallFile);
+			String bigFile = fileUploadInfo.getImagePath(fileName);
+			Thumbnails.of(imageupload.getInputStream()).size(800, 2000).toFile(bigFile);
 			Thumbnails.of(imageupload.getInputStream()).size(40, 40).toFile(tinyFile);
+			new GeneratorImageThread(imageupload.getInputStream(), 330, 330, smallFile);
 		} catch (IOException e) {
 			logger.error(e.getMessage());
 		}

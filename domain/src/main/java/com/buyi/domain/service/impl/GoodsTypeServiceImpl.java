@@ -40,9 +40,14 @@ public class GoodsTypeServiceImpl implements GoodsTypeService {
 		GoodsTypeDO typeDO = goodsTypeDao.loadGoodsTypeById(id);
 		String filename = typeDO.getPicName();
 		if (filename != null) {
+			String imagePath = fileUploadInfo.getImagePath(filename);
+			File bigImageFile = new File(imagePath);
+			new FileDeleteThread(bigImageFile);
+			
 			String smallImagePath = fileUploadInfo.getSmallImagePath(filename);
 			File smallImageFile = new File(smallImagePath);
 			new FileDeleteThread(smallImageFile);
+			
 			String tinyImagePath = fileUploadInfo.getTinyImagePath(filename);
 			File tinyImageFile = new File(tinyImagePath);
 			new FileDeleteThread(tinyImageFile);

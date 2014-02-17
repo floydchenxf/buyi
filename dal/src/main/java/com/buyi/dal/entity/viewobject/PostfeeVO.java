@@ -64,5 +64,9 @@ public class PostfeeVO {
 		
 		return sb.toString();
 	}
+	
+	public String toString() {
+		return this.getPostInfo();
+	}
 
 }

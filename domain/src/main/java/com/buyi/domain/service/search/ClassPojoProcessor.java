@@ -124,7 +124,8 @@ public class ClassPojoProcessor implements SearchPojoProcessor {
         return documents;
     }
 
-    public <T> T convert2Obj(Document doc, Class<T> clazz) {
+    @SuppressWarnings("unchecked")
+	public <T> T convert2Obj(Document doc, Class<T> clazz) {
         List<SearableMeta> metaList = searableMetas.get(clazz.getName());
         if (metaList == null) {
             metaList = generateMetaInfos(clazz);

@@ -184,6 +184,10 @@ public class UrlUtil {
 	public static String getTinyImagePath(String filename) {
 		return getImageServer() + File.separator + TINY_IMAGE_PATH + File.separator + filename;
 	}
+	
+	public static String getSearchImagePath(String filename) {
+		return getImageServer() + File.separator + SEARCH_IMAGE_PATH + File.separator + filename;
+	}
 
 	public static void main(String[] args) {
 		System.out.println(UrlUtil.get("VISITOR_RECORD_REMOVE"));

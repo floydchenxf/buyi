@@ -8,11 +8,15 @@
 	<script type="text/javascript">
 	$(document).ready(
 		function(){
+		
+		var column1, column2, column3;
 			$('#c1 li').click(function(){
 				var target = $('#c2');
+				var target2 = $('#c3');
 				var selectValue = $('#selected-category');
 				var publishButton = $('#publish-goods-button');
-				target.html("");
+				target.html('');
+				target2.html('');
 				selectValue.val('');
 				publishButton.css('display', 'none');
 				var id = $(this).attr('data-item');
@@ -29,10 +33,24 @@
 							var isLeaf = item.leaf;
 							if (isLeaf == 'true') {
 							} else {
-								target.append("<li data-item='"+item.id+"' leaf='"+item.leaf+"'>"+item.categoryName+"</li>");
+								target.append("<li data-item='"+item.id+"' id='"+item.id+"' leaf='"+item.leaf+"'>"+item.categoryName+"</li>");
 							}
 						});
 					});
+				}
+				
+				//设置背景颜色
+				if (column1 == undefined) {
+					column1 = $(this).attr('data-item');
+					$(this).css('background-color', 'yellow');
+				} else {
+					var c_c = $(this).attr('data-item');
+					if (c_c != column1) {
+						$(this).css('background-color', 'yellow');
+						$('#'+column1).css('background-color', 'white');
+						column1 = c_c;
+					}
+					
 				}
 			});
 			
@@ -54,9 +72,23 @@
 				} else {
 					$.getJSON("$urlUtil.QUERY_SUB_CATEGORY?pid="+id, function(data) {
 						$.each(data, function(i, item) {
-							target.append("<li data-item='"+item.id+"' leaf='"+item.leaf+"'>"+item.categoryName+"</li>");
+							target.append("<li data-item='"+item.id+"' id='"+item.id+"' leaf='"+item.leaf+"'>"+item.categoryName+"</li>");
 						});
 					});
+				}
+				
+				//设置背景颜色
+				if (column2 == undefined) {
+					column2 = $(this).attr('data-item');
+					$(this).css('background-color', 'yellow');
+				} else {
+					var c_c = $(this).attr('data-item');
+					if (c_c != column1) {
+						$(this).css('background-color', 'yellow');
+						$('#'+column2).css('background-color', 'white');
+						column2 = c_c;
+					}
+					
 				}
 			});
 			
@@ -74,6 +106,19 @@
 						$('#publish-goods-form').submit();
 					});
 				}
+				
+				if (column3 == undefined) {
+					column3 = $(this).attr('data-item');
+					$(this).css('background-color', 'yellow');
+				} else {
+					var c_c = $(this).attr('data-item');
+					if (c_c != column1) {
+						$(this).css('background-color', 'yellow');
+						$('#'+column3).css('background-color', 'white');
+						column3 = c_c;
+					}
+					
+				}
 			});
 		}
 	)
@@ -87,7 +132,7 @@
 		<div class="w26 categroy">
 			<ul id="c1" class="column categroy scollbar">
 				#foreach($category in $categoryList)
-					<li data-item="$category.id" leaf="$category.leaf">$category.categoryName</li>
+					<li data-item="$category.id" leaf="$category.leaf" id="$category.id">$category.categoryName</li>
 				#end
 			</ul>
 			<div class="w1"></div>
