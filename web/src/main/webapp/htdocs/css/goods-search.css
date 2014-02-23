@@ -28,3 +28,20 @@
 	font-size:14px;
 	color:red;
 }
+
+.page-info {
+	text-align:center;
+	font-size:14px;
+	margin:20px 0;
+}
+
+.page-link {
+	border:1px solid #efefef;
+	padding:2px 5px;
+}
+
+.current {
+	border:1px solid #efefef;
+	padding:2px 5px;
+	background-color:#efefef;
+}

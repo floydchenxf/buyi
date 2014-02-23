@@ -76,7 +76,7 @@ public class GoodsDetailIndexSearchServiceImpl extends IndexReaderBaseService<Go
 		for (GoodsDetailIndexVO goodsDetailIndexVO : goodsDetailSearchVOs) {
 			GoodsDetailDO goodsDetailDO = convertV2O(goodsDetailIndexVO);
 			String title = goodsDetailIndexVO.getGoodsTitle();
-			highlighter.setTextFragmenter(new SimpleFragmenter(title.length()));
+			highlighter.setTextFragmenter(new SimpleFragmenter(title.length() + 25));
 			if (title != null) {
 				String highLightText = null;
 				try {

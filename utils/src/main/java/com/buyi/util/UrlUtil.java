@@ -63,7 +63,8 @@ public class UrlUtil {
 
 	// 市场相关---------------------------------------------
 	public static final String MARKET_INDEX = "/market/index";
-	public static final String MARKET_GOODS_SEARCH = "/market/goods_search";
+	public static final String MARKET_GOODS_SEARCH = "/market/goods_search"; 
+	public static final String MARKET_GOODS_SHOW = "/market/goods_show"; 
 
 	// 管理相关-------------------------------------------------
 	public static final String MANAGER_INDEX = "/managerment/index";
