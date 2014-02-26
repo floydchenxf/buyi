@@ -15,6 +15,6 @@ public interface GoodsDetailIndexSearchService {
 	 * @param pageable
 	 * @return
 	 */
-	List<GoodsDetailDO> searchGoodsDetails(String keyword, PageableEx pageable);
+	List<GoodsDetailDO> searchGoodsDetails(Long categoryId, String keyword, PageableEx pageable);
 
 }

@@ -141,13 +141,21 @@
 								
 								#set($i = $i+1)
 							#end
-						#else
-							<div class="row goods-type-row">
-								<div class="goods-type-pic">
-									<div class="goods-type-add"><a href="#" class="ex2trigger"><div>+</div></a></div>
-								</div>
-							</div>
 						#end
+						</div>
+					</div>
+					<div class="row">
+						<div class="column alpha">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</div>
+						<div class="column">
+							<a href="http://amos.im.alisoft.com/msg.aw?v=2&uid=zjutcxf128&site=cntaobao&s=2&charset=utf-8" class="button" target="_blank">联系旺旺</a>
+						</div>
+						<div class="column">
+							<a href="#" class="button" target="_blank">立刻购买</a>
+						</div>
+						<div class="column">
+							<a href="#" class="button" target="_blank">放入购物车</a>
 						</div>
 					</div>
 				</div>

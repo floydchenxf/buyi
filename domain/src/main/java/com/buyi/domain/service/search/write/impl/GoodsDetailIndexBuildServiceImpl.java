@@ -58,10 +58,10 @@ public class GoodsDetailIndexBuildServiceImpl extends IndexWriterBaseService<Goo
 		StringBuilder categoryBulder = new StringBuilder();
 		if (categoryVOs != null && !categoryVOs.isEmpty()) {
 			for (CategoryVO categoryVO : categoryVOs) {
-				categoryBulder.append(categoryVO.getCategoryName()).append(" ");
+				categoryBulder.append(categoryVO.getId()).append(" ");
 			}
 		}
-		vo.setCategoryNames(categoryBulder.toString());
+		vo.setCategoryIds(categoryBulder.toString());
 		return vo;
 	}
 }

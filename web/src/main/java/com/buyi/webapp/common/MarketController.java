@@ -50,8 +50,8 @@ public class MarketController {
 	 * @param pageable
 	 */
 	@RequestMapping(value = { UrlUtil.MARKET_GOODS_SEARCH }, method = RequestMethod.GET)
-	public void goodsSearch(Model model, @RequestParam(value = "q", required = true) String keyword, @PageableDefaults(16) PageableEx pageable) {
-		List<GoodsDetailDO> goodsDetailDOs = goodsDetailIndexSearchService.searchGoodsDetails(keyword, pageable);
+	public void goodsSearch(Model model, @RequestParam(value = "c", required = false) Long categoryId, @RequestParam(value = "q", required = false) String keyword, @PageableDefaults(16) PageableEx pageable) {
+		List<GoodsDetailDO> goodsDetailDOs = goodsDetailIndexSearchService.searchGoodsDetails(categoryId, keyword, pageable);
 		model.addAttribute("goodsDetailList", goodsDetailDOs);
 		model.addAttribute("pageable", pageable);
 	}

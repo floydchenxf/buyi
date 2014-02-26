@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.SimpleAnalyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.Filter;
@@ -46,15 +43,6 @@ public class IndexReaderBaseService<T> {
     protected SearchPojoProcessor searchPojoProcessor;
 
     protected Class<T> clazz;
-
-    @Autowired
-    protected Analyzer defaultChinaAnalyzer;
-
-    @Autowired
-    protected SimpleAnalyzer simpleAnalyzer;
-
-    @Autowired
-    protected StandardAnalyzer standardAnalyzer;
 
     public IndexReaderBaseService(Class<T> clazz) {
         this.clazz = clazz;

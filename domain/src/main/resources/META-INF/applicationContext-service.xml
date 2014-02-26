@@ -22,7 +22,7 @@
 	
 	<bean id="defaultChinaAnalyzer" class="org.wltea.analyzer.lucene.IKAnalyzer" />
 	
-	<bean id="simpleAnalyzer" class="org.apache.lucene.analysis.SimpleAnalyzer">
+	<bean id="whitespaceAnalyzer" class="org.apache.lucene.analysis.WhitespaceAnalyzer">
 		<constructor-arg index="0" type="org.apache.lucene.util.Version" value="LUCENE_35" />
 	</bean>
 	
@@ -36,7 +36,7 @@
 		</constructor-arg>
 		<constructor-arg index="1">
 			<map>
-				<entry key="categoryNames" value-ref="simpleAnalyzer" />
+				<entry key="categoryIds" value-ref="whitespaceAnalyzer" />
 			</map>
 		</constructor-arg>
 	</bean>

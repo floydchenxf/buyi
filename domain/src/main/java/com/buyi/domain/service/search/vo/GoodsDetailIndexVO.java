@@ -12,7 +12,7 @@ public class GoodsDetailIndexVO {
 	public static final String GOODS_PIC = "goodsPic";
 	public static final String GOODS_POSTFEE = "goodsPostfee";
 	public static final String GMT_CREATE = "gmtCreate";
-	public static final String CATEGORY_NAMES = "categoryNames";
+	public static final String CATEGORY_IDS = "categoryIds";
 	public static final String ORIGIN_PRICE = "originPrice";
 	public static final String CATEGORY_ID = "categoryId";
 
@@ -36,8 +36,8 @@ public class GoodsDetailIndexVO {
 	private String postfee;
 
 	// 类目名称
-	@SearchableProperty(name = CATEGORY_NAMES, index = Index.ANALYZED, store = Store.NO)
-	private String categoryNames;
+	@SearchableProperty(name = CATEGORY_IDS, index = Index.ANALYZED, store = Store.YES)
+	private String categoryIds;
 
 	@SearchableProperty(name = GMT_CREATE, index = Index.NOT_ANALYZED, store = Store.YES)
 	private Long gmtCreate;
@@ -97,16 +97,16 @@ public class GoodsDetailIndexVO {
 		this.postfee = postfee;
 	}
 
-	public String getCategoryNames() {
-		return categoryNames;
-	}
-
-	public void setCategoryNames(String categoryNames) {
-		this.categoryNames = categoryNames;
-	}
-
 	public Long getGmtCreate() {
 		return gmtCreate;
+	}
+
+	public String getCategoryIds() {
+		return categoryIds;
+	}
+
+	public void setCategoryIds(String categoryIds) {
+		this.categoryIds = categoryIds;
 	}
 
 	public void setGmtCreate(Long gmtCreate) {
