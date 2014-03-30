@@ -68,7 +68,7 @@ public class GoodsDetailIndexBuildServiceImpl extends IndexWriterBaseService<Goo
 
 	@Override
 	public void deleteGoodsIndex(Long goodsId, boolean isback) {
-		Term term = new Term(GoodsDetailIndexVO.ID, goodsId+"");
+		Term term = new Term(GoodsDetailIndexVO.ID, goodsId + "");
 		super.deleteIndex(term, isback);
 	}
 }

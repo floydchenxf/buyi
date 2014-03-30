@@ -39,7 +39,7 @@ public class MarketController {
 
 	@RequestMapping(value = { UrlUtil.MARKET_INDEX })
 	public void showMarket(Model model) {
-		List<CategoryVO> categorys = categoryService.getRootCategorys();
+		List<CategoryDO> categorys = categoryService.getCategorys();
 		model.addAttribute("categorys", categorys);
 	}
 
