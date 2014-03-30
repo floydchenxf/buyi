@@ -1,6 +1,6 @@
 .goods-item {
 	width:230px;
-	padding:5px 0;
+	padding:0 5px 5px 0;
 }
 
 .goods-img {
@@ -44,4 +44,13 @@
 	border:1px solid #efefef;
 	padding:2px 5px;
 	background-color:#efefef;
+}
+
+.category-tree {
+	border:1px solid #efefef;
+}
+.category-name {
+	font-size:16px;
+	padding-left:10px;
+	line-height:30px;
 }

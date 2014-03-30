@@ -32,11 +32,20 @@ public interface GoodsTypeDao {
 
 	/**
 	 * 根据ID获取数据
+	 * 
 	 * @param id
 	 * @return
 	 */
 	GoodsTypeDO loadGoodsTypeById(Long id);
 
 	boolean deleteGoodsType(Long id);
+
+	/**
+	 * 根据商品id删除商品类型
+	 * 
+	 * @param id
+	 * @return
+	 */
+	boolean deleteGoodsTypeByGoodsId(Long id);
 
 }

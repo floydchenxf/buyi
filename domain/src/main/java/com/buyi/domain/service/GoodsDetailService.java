@@ -48,6 +48,13 @@ public interface GoodsDetailService {
 	 */
 	List<GoodsDetailDO> querySmallGoodsDetail(String title, int startRow, int pageSize);
 	
+	/**
+	 * 删除商品
+	 * @param goodsId
+	 * @return
+	 */
+	boolean deleteGoodsDetail(Long goodsId);
+	
 	int countGoodsDetails(String title);
 	
 	/**
@@ -56,5 +63,12 @@ public interface GoodsDetailService {
 	 * @return
 	 */
 	boolean querySmallGoodsDetailByTitle(String title, Long categoryId);
+	
+	/**
+	 * 下架商品
+	 * @param goodsId
+	 * @return
+	 */
+	boolean offlineGoods(Long goodsId);
 
 }

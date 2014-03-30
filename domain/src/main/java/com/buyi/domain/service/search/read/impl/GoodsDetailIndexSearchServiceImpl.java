@@ -48,6 +48,7 @@ public class GoodsDetailIndexSearchServiceImpl extends IndexReaderBaseService<Go
 			return result;
 		}
 
+
 		BooleanQuery query = new BooleanQuery();
 		BooleanQuery keywordQuery = new BooleanQuery();
 		Query titleQuery = null;
@@ -100,7 +101,7 @@ public class GoodsDetailIndexSearchServiceImpl extends IndexReaderBaseService<Go
 
 	private GoodsDetailDO convertV2O(GoodsDetailIndexVO goodsDetailIndexVO) {
 		GoodsDetailDO goodsDetailDO = new GoodsDetailDO();
-		goodsDetailDO.setId(goodsDetailIndexVO.getId());
+		goodsDetailDO.setId(Long.parseLong(goodsDetailIndexVO.getId()));
 		goodsDetailDO.setTitle(goodsDetailIndexVO.getGoodsTitle());
 		goodsDetailDO.setGoodsPic1(goodsDetailIndexVO.getGoodsPic1());
 		goodsDetailDO.setOriginPrice(new Money(goodsDetailIndexVO.getOriginPrice()));

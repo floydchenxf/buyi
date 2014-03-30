@@ -1,9 +1,48 @@
-#foreach($category in $categorys)
-	#set($topName = $!category.categoryName)
-	#set($subCategorys = $category.getSubCategorys())
-	#if(!$subCategorys.isEmpty())
-		#foreach($secCategorys in $subCategorys)
-			$!topName -------- $!secCategorys.categoryName<br>
-		#end
-	#end
-#end
+<html>
+<head>
+	<title>华强布艺商城</title>
+	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/skeleton.css" />
+	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/index.css" />
+    <script src="$urlUtil.getStaticServer()/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+	<script>
+	    $(function () {
+			$('#search-goods').click(function() { 
+				var searchText = $('.search-text').val();
+				if (searchText.trim() == '') {
+					alert('请输入商品名称!');
+					return false;
+				}
+				
+				$('#search-form').submit();
+			});
+	    });
+    </script>
+</head>
+<body class="container">
+	<div class="row page-head">
+		<div class="logo">
+			<img src="$urlUtil.getStaticServer()/img/logo.png">
+		</div>
+		<div class="search">
+			<div class="searchForm">
+			<form name="searchForm" id="search-form" action="$urlUtil.MARKET_GOODS_SEARCH" method="get" target="_blank">
+				<input type="text" name="q" class="search-text" onkeydown="javascript:if(event.keyCode==13) search('key');">
+				<input type="button" value="搜索" class="button" id="search-goods">
+			</form>
+			</div>
+		</div>
+		<div class="login">
+			<a class="linked" href="#"><div class="mybushe">我的布舍</div></a>
+			<a class="linked" href="#"><div class="reg-user">注册</div></a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="w8 border alpha">
+			sdfsdf
+		</div>
+		<div class="w24 border omega">
+			sdfsdf
+		</div>
+	</dir>
+</body>
+</html>

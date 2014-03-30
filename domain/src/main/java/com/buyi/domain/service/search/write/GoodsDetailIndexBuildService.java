@@ -25,6 +25,13 @@ public interface GoodsDetailIndexBuildService {
      * @param goodsList
      */
     void saveSearchGoodsBatch(List<GoodsDetailDO> goodsList, boolean isback);
+    
+    /**
+     * 将商品从索引删除
+     * @param goodsDetail
+     * @param isback
+     */
+    void deleteGoodsIndex(Long goodsId, boolean isback);
 
     void swtichOn();
 

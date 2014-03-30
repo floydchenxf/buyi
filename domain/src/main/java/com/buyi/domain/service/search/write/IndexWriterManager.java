@@ -64,6 +64,7 @@ public abstract class IndexWriterManager {
         IndexWriter writer = writerMap.get(key);
         if (writer != null) {
             try {
+            	writer.optimize();
                 writer.close();
                 writer = null;
             } catch (Exception e) {

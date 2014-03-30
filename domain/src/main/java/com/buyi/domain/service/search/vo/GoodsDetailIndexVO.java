@@ -16,8 +16,8 @@ public class GoodsDetailIndexVO {
 	public static final String ORIGIN_PRICE = "originPrice";
 	public static final String CATEGORY_ID = "categoryId";
 
-	@SearchableProperty(name = ID, index = Index.NO, store = Store.YES)
-	private Long id;
+	@SearchableProperty(name = ID, index = Index.ANALYZED, store = Store.YES)
+	private String id;
 
 	// 标题，需要分析需要存储
 	@SearchableProperty(name = GOODS_TITLE, index = Index.ANALYZED, store = Store.YES)
@@ -57,11 +57,11 @@ public class GoodsDetailIndexVO {
 		this.categoryId = categoryId;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

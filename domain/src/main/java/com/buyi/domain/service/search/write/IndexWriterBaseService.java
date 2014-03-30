@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.Term;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,23 @@ public class IndexWriterBaseService<T> {
 
 	public void createIndex(T t) {
 		this.createIndex(t, false);
+	}
+
+	public void deleteIndex(Term term, boolean isback) {
+		IndexWriter indexWriter = indexWriterSwtichService.chooseWriter(clazz.getSimpleName(), isback);
+		try {
+			indexWriter.deleteDocuments(term);
+		} catch (Exception e) {
+			logger.error("add docment cause error:", e);
+		} finally {
+			try {
+				indexWriter.commit();
+				indexWriter.optimize();
+				indexWriterSwtichService.closeWriter(clazz.getSimpleName());
+			} catch (Exception e) {
+				logger.error("index writer delete commit cause error:--------", e);
+			}
+		}
 	}
 
 	/**

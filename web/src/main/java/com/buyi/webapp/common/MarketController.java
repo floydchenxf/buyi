@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.buyi.dal.entity.dataobject.CategoryDO;
 import com.buyi.dal.entity.dataobject.GoodsDetailDO;
 import com.buyi.dal.entity.dataobject.GoodsTypeDO;
 import com.buyi.domain.service.CategoryService;
@@ -50,10 +51,12 @@ public class MarketController {
 	 * @param pageable
 	 */
 	@RequestMapping(value = { UrlUtil.MARKET_GOODS_SEARCH }, method = RequestMethod.GET)
-	public void goodsSearch(Model model, @RequestParam(value = "c", required = false) Long categoryId, @RequestParam(value = "q", required = false) String keyword, @PageableDefaults(16) PageableEx pageable) {
+	public void goodsSearch(Model model, @RequestParam(value = "c", required = false) Long categoryId, @RequestParam(value = "q", required = false) String keyword, @PageableDefaults(12) PageableEx pageable) {
 		List<GoodsDetailDO> goodsDetailDOs = goodsDetailIndexSearchService.searchGoodsDetails(categoryId, keyword, pageable);
+		List<CategoryDO> categoryTree = categoryService.getCategorys();
 		model.addAttribute("goodsDetailList", goodsDetailDOs);
 		model.addAttribute("pageable", pageable);
+		model.addAttribute("categoryTree", categoryTree);
 	}
 
 	@RequestMapping(value = { UrlUtil.MARKET_GOODS_SHOW }, method = RequestMethod.GET)

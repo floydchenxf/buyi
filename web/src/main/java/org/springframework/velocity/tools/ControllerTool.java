@@ -94,7 +94,9 @@ public class ControllerTool extends SafeConfig {
 					context.put(param.getKey(), param.getValue());
 				}
 			}
-
+		}
+		
+		if (templateName == null) {
 			templateName = this.templateName;
 		}
 		

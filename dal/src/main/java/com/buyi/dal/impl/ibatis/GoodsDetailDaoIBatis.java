@@ -9,11 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import com.buyi.dal.GoodsDetailDao;
 import com.buyi.dal.entity.dataobject.GoodsDetailDO;
+import com.buyi.dal.entity.viewobject.GoodsStatus;
 
 @Repository("goodsDetailDao")
-public class GoodsDetailDaoIBatis extends BaseDaoIBatis<GoodsDetailDO>
-		implements GoodsDetailDao {
+public class GoodsDetailDaoIBatis extends BaseDaoIBatis<GoodsDetailDO> implements GoodsDetailDao {
 
+	private static final String DELETE_GOODS_DETAIL_BY_ID = "DELETE_GOODS_DETAIL_BY_ID";
 	private static final String UPDATE_GOODS_DETAIL_INFO = "UPDATE_GOODS_DETAIL_INFO";
 	private static final String GOODS_DETAIL_INSERT = "GOODS_DETAIL_INSERT";
 	private static final String QUERY_GOODS_DETAIL_BY_IDS = "QUERY_GOODS_DETAIL_BY_IDS";
@@ -37,8 +38,7 @@ public class GoodsDetailDaoIBatis extends BaseDaoIBatis<GoodsDetailDO>
 	public List<GoodsDetailDO> queryGoodsDetailByIds(List<Long> ids) {
 		Map<String, Object> idMap = new HashMap<String, Object>();
 		idMap.put("ids", ids);
-		List<GoodsDetailDO> goodsDetails = (List<GoodsDetailDO>) super
-				.getSqlMapClientTemplate().queryForList(QUERY_GOODS_DETAIL_BY_IDS, ids);
+		List<GoodsDetailDO> goodsDetails = (List<GoodsDetailDO>) super.getSqlMapClientTemplate().queryForList(QUERY_GOODS_DETAIL_BY_IDS, ids);
 		return goodsDetails;
 	}
 
@@ -49,8 +49,7 @@ public class GoodsDetailDaoIBatis extends BaseDaoIBatis<GoodsDetailDO>
 
 	@Override
 	public boolean updateGoodsDetail(GoodsDetailDO goodsDetailDO) {
-		int result = super.getSqlMapClientTemplate().update(
-				UPDATE_GOODS_DETAIL_INFO, goodsDetailDO);
+		int result = super.getSqlMapClientTemplate().update(UPDATE_GOODS_DETAIL_INFO, goodsDetailDO);
 		return result > 0;
 	}
 
@@ -62,11 +61,11 @@ public class GoodsDetailDaoIBatis extends BaseDaoIBatis<GoodsDetailDO>
 		params.put("pageSize", pageSize);
 		return super.getSqlMapClientTemplate().queryForList(QUERY_SMALL_GOODS_DETAIL_BY_TITLE, params);
 	}
-	
+
 	public int countGoodsDetails(String title) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("title", title);
-		return (Integer)super.getSqlMapClientTemplate().queryForObject(COUNT_GOODS_DETAIL_BY_TITLE, params);
+		return (Integer) super.getSqlMapClientTemplate().queryForObject(COUNT_GOODS_DETAIL_BY_TITLE, params);
 	}
 
 	@Override
@@ -76,6 +75,19 @@ public class GoodsDetailDaoIBatis extends BaseDaoIBatis<GoodsDetailDO>
 		parmas.put("categoryId", categoryId);
 		GoodsDetailDO detail = (GoodsDetailDO) super.getSqlMapClientTemplate().queryForObject(QUERY_SMALL_GOODS_DETAIL_BY_TITLE_UNLIKE, parmas);
 		return detail != null && detail.getTitle() != null;
+	}
+
+	@Override
+	public boolean deleteGoodsDetailById(Long id) {
+		return super.getSqlMapClientTemplate().delete(DELETE_GOODS_DETAIL_BY_ID, id) > 0;
+	}
+
+	@Override
+	public boolean offlineGoods(Long goodsId) {
+		GoodsDetailDO goodsDetailDO = new GoodsDetailDO();
+		goodsDetailDO.setId(goodsId);
+		goodsDetailDO.setStatus(GoodsStatus.OFFLINE);
+		return updateGoodsDetail(goodsDetailDO);
 	}
 
 }

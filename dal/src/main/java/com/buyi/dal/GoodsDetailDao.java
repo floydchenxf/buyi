@@ -44,4 +44,18 @@ public interface GoodsDetailDao {
 	
 	boolean querySmallGoodsDetailByTitle(String title, Long goodsId);
 
+	/**
+	 * 删除商品
+	 * @param goodsId
+	 * @return
+	 */
+	boolean deleteGoodsDetailById(Long goodsId);
+
+	/**
+	 * 下架商品
+	 * @param goodsId
+	 * @return
+	 */
+	boolean offlineGoods(Long goodsId);
+
 }

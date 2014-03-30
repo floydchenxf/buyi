@@ -75,6 +75,12 @@
 		]]>
 	</delete>
 	
+	<delete id="DELETE_GOODS_TYPE_BY_GOODS_ID" parameterClass="long">
+	<![CDATA[
+		delete from goods_type where goods_id = #goodsId#
+	]]>
+	</delete>
+	
 	<update id="UPDATE_GOODS_TYPE" parameterClass="goodsTypeDO">
 		<![CDATA[
 		update goods_type set gmt_modified = now()

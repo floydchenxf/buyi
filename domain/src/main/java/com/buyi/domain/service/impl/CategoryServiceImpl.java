@@ -42,6 +42,10 @@ public class CategoryServiceImpl implements CategoryService, InitializingBean {
 			}
 		}
 	}
+	
+	public List<CategoryDO> getCategorys() {
+		return result;
+	}
 
 	public List<CategoryVO> queryCategoryByParentId(Long id) {
 		List<CategoryVO> cResult = new ArrayList<CategoryVO>();

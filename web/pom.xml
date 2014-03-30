@@ -92,10 +92,5 @@
 			<artifactId>hibernate-validator</artifactId>
 			<type>jar</type>
 		</dependency>
-		<dependency>
-		  	<groupId>net.coobird</groupId>
-		  	<artifactId>thumbnailator</artifactId>
-		  	<type>jar</type>
-		</dependency>
 	</dependencies>
 </project>

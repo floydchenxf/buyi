@@ -1,0 +1,121 @@
+.page-head {
+	margin-bottom:10px;
+}
+
+.logo {
+	border:1px solid #f1f1f1;
+	width:230px;
+	height:90px;
+	float:left;
+	text-align:center;
+}
+
+.search {
+	border-top:1px solid #f1f1f1;
+	border-right:1px solid #f1f1f1;
+	border-bottom:1px solid #f1f1f1;
+	width:479px;
+	height:90px;
+	float:left;
+	text-align:center;
+}
+
+.search .searchForm {
+	border:3px solid #f672ac;
+	width:400px;
+	height:36px;
+	margin-top:26px;
+	margin-bottom:26px;
+	margin-left:36px;
+}
+
+.search .search-text {
+	width:285px;
+	height:34px;
+	line-height:34px;
+    	border:none;
+	float:left;
+	padding-left: 6px;
+	outline:medium;
+}
+
+input[type="button"] {
+	padding: 0px;
+	border: none;
+}
+
+.search .button {
+	background: #f672ac;
+	font-size: 14px;
+	font-weight: 700;
+	width:100px;
+	height:36px;
+	float:right;
+}
+
+.search .button:hover {
+	border:0px;
+	margin:0px;
+}
+
+.login {
+	border-top:1px solid #f1f1f1;
+	border-right:1px solid #f1f1f1;
+	border-bottom:1px solid #f1f1f1;
+	width:240px;
+	height:90px;
+	float:left;
+}
+
+.mybushe {
+	font-size:14px;
+	line-height:24px;
+	float:left;
+	margin:32px 10px;
+	text-indent:30px;
+	width:99px;
+	float:left;
+	background-image:url(http://static.buyi.com/img/buyi.png);
+	background-repeat: no-repeat;
+	background-position: -116px -86px;
+	background-color:#f7f7f7;
+	height:24px;
+}
+
+.reg-user {
+	font-size:14px;
+	text-indent:30px;
+	line-height:24px;
+	margin:32px 10px;
+	width:89px;
+	float:left;
+	background-image:url(http://static.buyi.com/img/buyi.png);
+	background-repeat: no-repeat;
+	background-position: -116px -27px;
+	background-color:#f7f7f7;
+	height:24px;
+}
+
+a.linked {
+	color: #000000;
+	cursor: pointer;
+}
+
+a.linked:hover {
+	text-decoration: none;
+	color: #000000;
+	cursor: pointer;
+}
+
+a.linked:visited {
+	color: #000000; 
+	outline: 0;
+}
+
+a.linked:active {
+	color: #000000
+}
+
+.border {
+	border:1px solid #f1f1f1
+}

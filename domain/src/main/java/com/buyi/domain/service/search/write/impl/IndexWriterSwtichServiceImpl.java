@@ -160,4 +160,19 @@ public class IndexWriterSwtichServiceImpl implements IndexWriterSwtichService, I
     public void afterPropertiesSet() throws Exception {
         basePath = indexWriterManager.getBasePath();
     }
+
+	@Override
+	public void closeWriter(String key) {
+		LinkedList<String> keyList = keyMap.get(key);
+        if (keyList == null) {
+            keyList = new LinkedList<String>();
+            String writeFile = fetchFile(key);
+            keyList.add(writeFile);
+        }
+
+        String currentKey = keyList.get(0);
+        if (currentKey != null) {
+        	indexWriterManager.colseWriter(currentKey);
+        }
+	}
 }

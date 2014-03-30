@@ -62,26 +62,28 @@ public class UrlUtil {
 	public static final String BUYI_SIGNUP = "/sso/signup";
 
 	// 市场相关---------------------------------------------
-	public static final String MARKET_INDEX = "/market/index";
-	public static final String MARKET_GOODS_SEARCH = "/market/goods_search"; 
-	public static final String MARKET_GOODS_SHOW = "/market/goods_show"; 
+	public static final String MARKET_INDEX = "/market/index"; //首页
+	public static final String MARKET_GOODS_SEARCH = "/market/goods_search"; //商品搜索 
+	public static final String MARKET_GOODS_SHOW = "/market/goods_show";  //商品详情
 
 	// 管理相关-------------------------------------------------
-	public static final String MANAGER_INDEX = "/managerment/index";
-	public static final String SELLED_GOODS = "/managerment/selled_goods";
-	public static final String PUBLISH_GOODS = "/managerment/publish_goods";
+	public static final String MANAGER_INDEX = "/managerment/index"; //商品管理首页
+	public static final String SELLED_GOODS = "/managerment/selled_goods"; //已经卖出的商品
+	public static final String PUBLISH_GOODS = "/managerment/publish_goods"; //显示商品类目
 	public static final String DIVIVE_GOODS = "/managerment/divive_goods";
-	public static final String QUERY_SUB_CATEGORY = "/managerment/query_sub_category";
-	public static final String GOODS_SETTING = "/managerment/goods_setting";
-	public static final String UPLOAD_FILES = "/managerment/upload_files";
-	public static final String ADD_GOODS = "/managerment/add_goods";
-	public static final String SEARCH_GOODS = "/managerment/search_goods";
-	public static final String SHOW_GOODS = "/managerment/show_goods";
-	public static final String EDIT_GOODS = "/managerment/edit_goods";
-	public static final String GOODS_TYPE_ADD = "/managerment/goods_type_add";
-	public static final String GOODS_TYPE_EDIT = "/managerment/goods_type_edit";
-	public static final String GOODS_TYPE_DELETE = "/managerment/goods_type_delete";
-	public static final String PUBLISH_GOODS_DETAIL = "/managerment/goods_detail_publish";
+	public static final String QUERY_SUB_CATEGORY = "/managerment/query_sub_category"; //查询商品子类目
+	public static final String GOODS_SETTING = "/managerment/goods_setting"; //商品设置
+	public static final String UPLOAD_FILES = "/managerment/upload_files"; //文件上传
+	public static final String ADD_GOODS = "/managerment/add_goods"; //添加商品
+	public static final String SEARCH_GOODS = "/managerment/search_goods"; //搜索商品
+	public static final String SHOW_GOODS = "/managerment/show_goods"; //显示商品
+	public static final String EDIT_GOODS = "/managerment/edit_goods"; //编辑商品
+	public static final String GOODS_TYPE_ADD = "/managerment/goods_type_add"; //商品类型添加
+	public static final String GOODS_TYPE_EDIT = "/managerment/goods_type_edit"; //商品类型修改
+	public static final String GOODS_TYPE_DELETE = "/managerment/goods_type_delete"; //商品类型删除
+	public static final String PUBLISH_GOODS_DETAIL = "/managerment/goods_detail_publish"; //商品发布
+	public static final String OFFLINE_GOODS = "/managerment/offline_goods"; //下架商品
+	public static final String DELETE_GOODS = "/managerment/delete_goods"; //删除商品
 
 	// 用户相关---------------------------------------------------
 

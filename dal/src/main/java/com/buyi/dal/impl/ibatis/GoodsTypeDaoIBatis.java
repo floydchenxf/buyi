@@ -10,6 +10,7 @@ import com.buyi.dal.entity.dataobject.GoodsTypeDO;
 @Repository("goodsTypeDao")
 public class GoodsTypeDaoIBatis extends BaseDaoIBatis<GoodsTypeDO> implements GoodsTypeDao {
 
+	private static final String DELETE_GOODS_TYPE_BY_GOODS_ID = "DELETE_GOODS_TYPE_BY_GOODS_ID";
 	private static final String UPDATE_GOODS_TYPE = "UPDATE_GOODS_TYPE";
 	private static final String QUERY_GOODS_TYPE_BY_GOODS_ID = "QUERY_GOODS_TYPE_BY_GOODS_ID";
 	private static final String GOODS_TYPE_DO_INSERT = "GOODS_TYPE_DO_INSERT";
@@ -40,6 +41,11 @@ public class GoodsTypeDaoIBatis extends BaseDaoIBatis<GoodsTypeDO> implements Go
 	@Override
 	public boolean deleteGoodsType(Long id) {
 		return super.getSqlMapClientTemplate().delete(DELETE_GOODS_TYPE_BY_ID, id) > 0;
+	}
+
+	@Override
+	public boolean deleteGoodsTypeByGoodsId(Long goodsId) {
+		return super.getSqlMapClientTemplate().delete(DELETE_GOODS_TYPE_BY_GOODS_ID,goodsId) > 0;
 	}
 
 }

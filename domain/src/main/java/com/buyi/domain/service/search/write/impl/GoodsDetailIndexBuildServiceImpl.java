@@ -3,6 +3,7 @@ package com.buyi.domain.service.search.write.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.lucene.index.Term;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,7 @@ public class GoodsDetailIndexBuildServiceImpl extends IndexWriterBaseService<Goo
 
 	private GoodsDetailIndexVO convertD2V(GoodsDetailDO goodsDetail) {
 		GoodsDetailIndexVO vo = new GoodsDetailIndexVO();
-		vo.setId(goodsDetail.getId());
+		vo.setId(goodsDetail.getId()+"");
 		vo.setGoodsDesc(goodsDetail.getGoodsDesc());
 		vo.setGmtCreate(goodsDetail.getGmtCreate().getTime());
 		vo.setOriginPrice(goodsDetail.getOriginPrice().getAmount());
@@ -63,5 +64,11 @@ public class GoodsDetailIndexBuildServiceImpl extends IndexWriterBaseService<Goo
 		}
 		vo.setCategoryIds(categoryBulder.toString());
 		return vo;
+	}
+
+	@Override
+	public void deleteGoodsIndex(Long goodsId, boolean isback) {
+		Term term = new Term(GoodsDetailIndexVO.ID, goodsId+"");
+		super.deleteIndex(term, isback);
 	}
 }

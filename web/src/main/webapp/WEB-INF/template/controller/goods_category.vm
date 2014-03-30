@@ -1,0 +1,7 @@
+<div class="category-tree">
+	#foreach($c in $categoryTree)
+		<div class="category-name">
+			<a href="$urlUtil.MARKET_GOODS_SEARCH.pm('c',$c.id)">$c.categoryName</a>
+		</div>
+	#end
+</div>

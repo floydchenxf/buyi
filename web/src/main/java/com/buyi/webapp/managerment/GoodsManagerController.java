@@ -1,7 +1,6 @@
 package com.buyi.webapp.managerment;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +34,7 @@ import com.buyi.domain.service.GoodsTypeService;
 import com.buyi.domain.service.search.write.GoodsDetailIndexBuildService;
 import com.buyi.domain.vo.CategoryVO;
 import com.buyi.domain.vo.FileUploadInfo;
+import com.buyi.domain.vo.ImageGeneratorThread;
 import com.buyi.util.UrlUtil;
 import com.buyi.webapp.common.JsonResult;
 import com.buyi.webapp.managerment.vo.FileUploadVO;
@@ -194,9 +194,9 @@ public class GoodsManagerController {
 						String tinyFile = fileUploadInfo.getTinyImagePath(fileName);
 						String searchFile = fileUploadInfo.getSearchImagePath(fileName);
 						Thumbnails.of(file.getInputStream()).size(800, 2000).toFile(bigFile);
-						new GeneratorImageThread(file.getInputStream(), 330, 330, smallFile);
-						new GeneratorImageThread(file.getInputStream(), 190, 190, searchFile);
-						new GeneratorImageThread(file.getInputStream(), 60, 60, tinyFile);
+						new ImageGeneratorThread(file.getInputStream(), 330, 330, smallFile);
+						new ImageGeneratorThread(file.getInputStream(), 190, 190, searchFile);
+						new ImageGeneratorThread(file.getInputStream(), 60, 60, tinyFile);
 					} catch (IOException e) {
 						logger.error(e.getMessage());
 					}
@@ -386,7 +386,7 @@ public class GoodsManagerController {
 			String bigFile = fileUploadInfo.getImagePath(fileName);
 			Thumbnails.of(imageupload.getInputStream()).size(800, 2000).toFile(bigFile);
 			Thumbnails.of(imageupload.getInputStream()).size(40, 40).toFile(tinyFile);
-			new GeneratorImageThread(imageupload.getInputStream(), 330, 330, smallFile);
+			new ImageGeneratorThread(imageupload.getInputStream(), 330, 330, smallFile);
 		} catch (IOException e) {
 			logger.error(e.getMessage());
 		}
@@ -420,6 +420,12 @@ public class GoodsManagerController {
 		model.addAttribute("goodsTypeForm", typeForm);
 	}
 
+	/**
+	 * 商品类型编辑
+	 * @param goodsTypeForm
+	 * @param result
+	 * @return
+	 */
 	@RequestMapping(value = { UrlUtil.GOODS_TYPE_EDIT }, method = RequestMethod.POST)
 	public String editGoodsType(@Valid GoodsTypeForm goodsTypeForm, BindingResult result) {
 		if (result.hasErrors()) {
@@ -440,6 +446,11 @@ public class GoodsManagerController {
 		return "redirect:" + UrlUtil.getBackendUrl(UrlUtil.SHOW_GOODS, true).pm("id", goodsId);
 	}
 
+	/**
+	 * 删除商品类型
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = { UrlUtil.GOODS_TYPE_DELETE }, method = RequestMethod.GET)
 	public @ResponseBody
 	JsonResult deleteGoodsType(@RequestParam(value = "id", required = true) Long id) {
@@ -452,6 +463,11 @@ public class GoodsManagerController {
 		return result;
 	}
 
+	/**
+	 * 发布商品
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = { UrlUtil.PUBLISH_GOODS_DETAIL }, method = RequestMethod.GET)
 	public @ResponseBody
 	JsonResult publishGoodsDetails(@RequestParam(value = "id", required = true) Long id) {
@@ -470,50 +486,57 @@ public class GoodsManagerController {
 			result.setMessage("商品不存在，请检查!");
 			return result;
 		}
-		// 构建索引
 		goodsDetail.setStatus(GoodsStatus.ONLINE);
 		boolean updateSuccess = goodsDetailService.updateGoodsDetail(goodsDetail);
 		if (!updateSuccess) {
 			result.setSuccess(false);
 			result.setMessage("发布商品不成功!请联系管理员");
 		} else {
+			// 构建索引
 			result.setSuccess(true);
 			goodsDetailIndexBuildService.buildGoodsIndex(goodsDetail, false);
 		}
 
 		return result;
 	}
-
+	
+	
 	/**
-	 * 生成缩略图线程
-	 * 
-	 * @author cxf128
-	 * 
+	 * 删除商品
+	 * @param id
+	 * @return
 	 */
-	public class GeneratorImageThread extends Thread {
-
-		private int width;
-		private int height;
-		private InputStream is;
-		private String toFilePath;
-
-		public GeneratorImageThread(InputStream is, int width, int height, String toFilePath) {
-			this.width = width;
-			this.height = height;
-			this.is = is;
-			this.toFilePath = toFilePath;
-			this.start();
+	@RequestMapping(value={UrlUtil.DELETE_GOODS}, method = RequestMethod.GET)
+	public @ResponseBody
+	JsonResult deleteGoods(@RequestParam(value = "id", required = true) Long id) {
+		JsonResult result = new JsonResult();
+		//删除商品类型及图片
+		goodsTypeService.deleteGoodsTypeByGoodsId(id);
+		//删除数据库数据及图片
+		boolean success = goodsDetailService.deleteGoodsDetail(id);
+		//删除索引
+		goodsDetailIndexBuildService.deleteGoodsIndex(id, false);
+		
+		if (!success) {
+			result.setMessage("执行不成功!请联系管理员");
+			result.setSuccess(false);
+		} else {
+			result.setSuccess(true);
 		}
-
-		@Override
-		public void run() {
-			try {
-				Thumbnails.of(is).size(width, height).toFile(toFilePath);
-			} catch (IOException e) {
-				logger.error(e.toString());
-			}
-		}
-
+		return result;
 	}
-
+	
+	@RequestMapping(value={UrlUtil.OFFLINE_GOODS}, method = RequestMethod.GET)
+	public @ResponseBody JsonResult offlineGoods(@RequestParam(value = "id", required = true) Long id) {
+		JsonResult result = new JsonResult();
+		//下架商品，客户打开商品详情页面需要判断是否已经下架
+		boolean success = goodsDetailService.offlineGoods(id);
+		if (!success) {
+			result.setMessage("下架不成功!请联系管理员");
+		} else {
+			goodsDetailIndexBuildService.deleteGoodsIndex(id, false);
+			result.setSuccess(true);
+		}
+		return result;
+	}
 }

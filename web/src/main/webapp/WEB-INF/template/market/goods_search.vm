@@ -7,11 +7,14 @@
     <script src="$urlUtil.getStaticServer()/js/jquery-1.7.1.min.js" type="text/javascript"></script>
 </head>
 <body class="container">
-	<div class="w32">	
+	<div class="w8">
+		$controller.setTemplate('controller/goods_category.vm').setParameter('categoryTree',$categoryTree)
+	</div>
+	<div class="w24">	
 		#if($goodsDetailList && $goodsDetailList.size() > 0)
 			#set($i=0)
 			#foreach($goodsDetail in $goodsDetailList)
-				#if($i%4==0)
+				#if($i%3==0)
 					<div class="row">
 				#end
 				<div class="column alpha omega">		
@@ -29,15 +32,15 @@
 					</div>
 				</div>
 								
-				#if($i%4 == 3 || $i + 1== $goodsDetailList.size())
+				#if($i%3 == 2 || $i + 1== $goodsDetailList.size())
 					</div>
 				#end
 				#set($i=$i+1)
 			#end
 			
 			#set($pageUrl='')
-			#if($!paramsTool.q)
-				#set($pageUrl=$urlUtil.MARKET_GOODS_SEARCH.pm('q',$!paramsTool.q).render())
+			#if($!paramsTool.q || $!paramsTool.c)
+				#set($pageUrl=$urlUtil.MARKET_GOODS_SEARCH.pm('q',$!paramsTool.q).pm('c',$!paramsTool.c).render())
 			#else
 				#set($pageUrl=${urlUtil.MARKET_GOODS_SEARCH}+'?')
 			#end

@@ -21,6 +21,12 @@ public interface IndexWriterSwtichService {
      * @return
      */
     public IndexWriter chooseWriter(String key, boolean isback);
+    
+    /**
+     * 关闭indexWrite
+     * @param key
+     */
+    public void closeWriter(String key);
 
     /**
      * 是否切换

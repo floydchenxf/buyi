@@ -46,4 +46,11 @@ public interface GoodsTypeService {
 	 */
 	GoodsTypeDO loadGoodsTypeById(Long id);
 
+	/**
+	 * 根据商品id删除商品类型
+	 * @param id
+	 * @return
+	 */
+	boolean deleteGoodsTypeByGoodsId(Long id);
+
 }

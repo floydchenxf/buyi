@@ -2,6 +2,7 @@ package com.buyi.domain.service;
 
 import java.util.List;
 
+import com.buyi.dal.entity.dataobject.CategoryDO;
 import com.buyi.domain.vo.CategoryVO;
 
 public interface CategoryService {
@@ -28,5 +29,11 @@ public interface CategoryService {
 	 * @return
 	 */
 	List<CategoryVO> queryCategoryTree(Long id);
+	
+	/**
+	 * 获取类目
+	 * @return
+	 */
+	List<CategoryDO> getCategorys();
 
 }

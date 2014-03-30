@@ -187,5 +187,11 @@
 		 limit 0, 1
 	]]>
 	</select>
+	
+	<delete id="DELETE_GOODS_DETAIL_BY_ID" parameterClass="java.lang.Long">
+	<![CDATA[
+		delete from goods_detail where id = #id#
+	]]>
+	</delete>
 
 </sqlMap>
