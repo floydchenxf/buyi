@@ -1,0 +1,59 @@
+#*
+@goodsDetails 商品详情列表
+@categoryName 类目名称
+@categoryId 类目id
+*#
+<div class="row">
+	<div class="block-title">
+		<div class="block-desc">$!categoryName <div class="view-more"><a href="$urlUtil.MARKET_GOODS_SEARCH.pm('c',$categoryId)" class="linked">更多</a></div></div>
+	</div>
+	
+	<div class="block-content fd-clr">
+	#set($i=0)
+	#set($size = $goodsDetails.size())
+	#foreach($goodsItem in $goodsDetails)
+		#if($i ==0 )
+		<div class="column">
+			<a href="$urlUtil.MARKET_GOODS_SHOW.pm('id', $goodsItem.id)" target="_blank" class="linked">
+				<div class="nine-block-big">
+					<img src="$urlUtil.getSearchImagePath($goodsItem.goodsPic1)">
+				</div>
+				<div class="item-title">$!goodsItem.title</div>
+			</a>
+		</div>
+		#else 
+			#if($i % 2 == 1)
+			<div class="column">
+			#end
+				#if($i % 2 == 1)
+					<a href="$urlUtil.MARKET_GOODS_SHOW.pm('id', $goodsItem.id)" target="_blank" class="linked">	
+						<div class="row">
+							<div class="nine-block-small">
+								<img src="$urlUtil.getTinyImagePath($goodsItem.goodsPic1)">
+							</div>
+							<div class="item-title-small">
+								$!goodsItem.title
+							</div>	
+						</div>
+					</a>
+				#end
+				#if($i % 2 == 0)
+					<a href="$urlUtil.MARKET_GOODS_SHOW.pm('id', $goodsItem.id)" target="_blank" class="linked">
+						<div class="row" style="margin-top:15px;">
+							<div class="nine-block-small">
+								<img src="$urlUtil.getTinyImagePath($goodsItem.goodsPic1)">
+							</div>
+							<div class="item-title-small">
+								$!goodsItem.title
+							</div>
+						</div>
+					</a>
+				#end
+			#if($i % 2 == 0 || $i + 1 == $size)
+				</div>
+			#end
+		#end
+		#set($i=$i+1)
+	#end
+	</div>
+</div>

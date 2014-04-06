@@ -91,7 +91,7 @@ input[type="button"] {
 	line-height:24px;
 	margin:32px 10px;
 	width:89px;
-	float:left;
+	float:right;
 	background-image:url(http://static.buyi.com/img/buyi.png);
 	background-repeat: no-repeat;
 	background-position: -116px -27px;
@@ -102,6 +102,7 @@ input[type="button"] {
 a.linked {
 	color: #000000;
 	cursor: pointer;
+	text-decoration: none;
 }
 
 a.linked:hover {
@@ -143,6 +144,7 @@ a.linked:active {
 	z-index:995;
 	border-right:1px solid #f1f1f1;
 	border-bottom:1px solid #f1f1f1;
+	font-size:14px;
 }
 
 .category-item:hover {
@@ -197,4 +199,117 @@ a.linked:active {
 
 .category-item:hover .subCategory{
 	display:block;
+}
+
+.block-title {
+	height:40px;
+	line-height:28px;
+	border:1px solid #f1f1f1;
+	font-size:14px;
+}
+
+.view-more {
+	float:right;
+	margin-right:12px;
+}
+
+.block-content {
+	border-bottom:1px solid #f1f1f1;
+	border-left:1px solid #f1f1f1;
+	border-right:1px solid #f1f1f1;
+	padding:5px;
+	font-size:14px;
+}
+
+.block-desc {
+	margin-top:6px;
+	border-left:6px solid #f672ac;
+	margin-left:10px;
+	text-indent:6px;
+}
+
+.nine-block-big {
+	display: table-cell;
+	text-align: center;
+	font-size: 0px;
+	vertical-align: middle;
+	width: 200px;
+	height: 200px;
+	border:1px solid #f1f1f1;
+}
+
+.nine-block-small {
+	display: table-cell;
+	text-align: center;
+	font-size: 0px;
+	vertical-align: middle;
+	width: 85px;
+	height: 85px;
+	border:1px solid #f1f1f1;
+}
+
+.item-title-small {
+	text-align:center;
+	border-bottom:1px solid #f1f1f1;
+	border-left:1px solid #f1f1f1;
+	border-right:1px solid #f1f1f1;
+	line-height:24px;
+	font-size:12px;
+	overflow:hidden;
+	width:85px;
+	height:24px;
+}
+
+.item-title {
+	text-align:center;
+	border-bottom:1px solid #f1f1f1;
+	border-left:1px solid #f1f1f1;
+	border-right:1px solid #f1f1f1;
+	line-height:36px;
+}
+
+.line-split {
+	margin-top:10px;
+}
+
+.footer {
+	margin-top:12px;
+	margin-bottom:2px;
+	width:950px;
+	border:1px solid #dcdcdc;
+	background-color:#f1f1f1;
+	font-size:14px;
+}
+
+.footer-item {
+	width:180px;
+	padding-top:12px;
+	padding-bottom:2px;
+}
+
+.footer-item-title {
+	text-indent:30px;
+	font-size:14px;
+}
+
+.qcode {
+	text-align:center;
+	font-size:14px;
+}
+
+.copy-right {
+	text-align:center;
+	font-size:12px;
+	line-height:30px;
+}
+
+li {
+	margin:0; 
+	padding:0; 
+	line-height:24px;
+}
+
+ul {	
+	list-style:none;
+	text-align:left;
 }

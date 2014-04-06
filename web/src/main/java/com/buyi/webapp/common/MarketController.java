@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequestEx;
 import org.springframework.data.domain.PageableEx;
 import org.springframework.data.web.PageableDefaults;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,19 @@ public class MarketController {
 	public void showMarket(Model model) {
 		List<CategoryDO> categorys = categoryService.getCategorys();
 		model.addAttribute("categorys", categorys);
+		//绒布
+		PageableEx pageableEx = new PageRequestEx(0, 11, 0);
+		List<GoodsDetailDO> rongbu = goodsDetailIndexSearchService.searchGoodsDetails(1l, null, pageableEx);
+		//仿麻
+		List<GoodsDetailDO> fangbu = goodsDetailIndexSearchService.searchGoodsDetails(2l, null, pageableEx);
+		//雪尼尔
+		List<GoodsDetailDO> xnrbu = goodsDetailIndexSearchService.searchGoodsDetails(3l, null, pageableEx);
+		//仿皮
+		List<GoodsDetailDO> fangpi = goodsDetailIndexSearchService.searchGoodsDetails(4l, null, pageableEx);
+		model.addAttribute("rongbu", rongbu);
+		model.addAttribute("fangbu", fangbu);
+		model.addAttribute("xnrbu", xnrbu);
+		model.addAttribute("fangpi", fangpi);
 	}
 
 	/**
