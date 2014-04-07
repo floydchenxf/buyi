@@ -19,52 +19,11 @@
     </script>
 </head>
 <body class="container">
-	<div class="row page-head">
-		<div class="logo">
-			<img src="$urlUtil.getStaticServer()/img/logo.png">
-		</div>
-		<div class="search">
-			<div class="searchForm">
-			<form name="searchForm" id="search-form" action="$urlUtil.MARKET_GOODS_SEARCH" method="get" target="_blank">
-				<input type="text" name="q" class="search-text" onkeydown="javascript:if(event.keyCode==13) search('key');">
-				<input type="button" value="搜索" class="button" id="search-goods">
-			</form>
-			</div>
-		</div>
-		<div class="login">
-			<a class="linked" href="#"><div class="mybushe">我的布舍</div></a>
-			<a class="linked" href="#"><div class="reg-user">注册</div></a>
-		</div>
-	</div>
+	$controller.setTemplate('controller/header.vm')
+	
 	<div class="row">
 		<div class="w8 alpha">
-			<div class="category-title">
-				商品类目分类
-			</div>
-			#foreach($category in $categorys)
-				<div class="category-item" data-item="$category.id">
-					<a href="$urlUtil.MARKET_GOODS_SEARCH.pm('c', $category.id)">
-						<div>$category.categoryName</div>
-					</a>
-					#set($subCategorys = $category.subCategorys)
-					#set($size =$subCategorys.size())
-					<div class="subCategory" id="subCategory$category.id">
-						#set($i = 0)
-						#foreach($subCategory in $subCategorys)
-							<a href="$urlUtil.MARKET_GOODS_SEARCH.pm('c', $subCategory.id)">
-							#if($i==0)
-									<div class="subcategory-first">$subCategory.categoryName</div>
-							#elseif($size == $i + 1)
-									<div class="subcategory-end">$subCategory.categoryName</div>
-							#else
-									<div class="subcategory-middle">$subCategory.categoryName</div>
-							#end
-							</a>
-							#set($i=$i+1)
-						#end
-					</div>
-				</div>
-			#end
+			$controller.setTemplate('controller/category_list.vm').setParameter('categorys',$categorys)
 		</div>
 		<div class="w24 omega">
 			#if($rongbu && $rongbu.size() > 0)	$!controller.setTemplate('controller/goods_elevent.vm').setParameter('goodsDetails',$rongbu).setParameter('categoryName','绒布系列').setParameter('categoryId', 1)
@@ -86,46 +45,6 @@
 		</div>
 	</div>
 	
-	<div class="footer">
-		<div class="row">
-			<div class="column footer-item">
-				<div class="footer-item-title">团队</div>
-				<ul>
-					<li>关于我们</li>
-					<li>联系我们</li>
-				</ul>
-			</div>
-			<div class="column footer-item">
-				<div class="footer-item-title">手机版本</div>
-				<ul>
-					<li>Android版本</li>
-					<li>IOS版本</li>
-				</ul>
-			</div>
-			<div class="column footer-item qcode">
-				<div>二维码</div>
-				<div style="margin-top:2px;"><img src="$urlUtil.getStaticServer()/img/buyibushe.png" width="80" height="80"></div>
-			</div>
-			<div class="column footer-item">
-				<div class="footer-item-title">
-					关注我们
-				</div>
-				<ul>
-					<li>新浪微博</li>
-					<li>QQ空间</li>
-				</ul>
-			</div>
-			<div class="column footer-item">
-				<div class="footer-item-title">网站建设</div>
-				<ul>
-					<li>帮助</li>
-					<li>客服联系</li>
-				</ul>
-			</div>
-		</div>
-		<div class="row">
-				<div class="copy-right">布艺布舍 Copyright © 2009-2014 www.buyibushe.com All Rights Reserved. ICP证：辽ICP备12008583号</div>
-		</div>
-	</div>
+	$controller.setTemplate('controller/footer.vm')
 </body>
 </html>

@@ -9,6 +9,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.tools.generic.SafeConfig;
+import org.apache.velocity.tools.view.ParameterTool;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
 

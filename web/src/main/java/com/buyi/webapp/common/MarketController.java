@@ -71,6 +71,14 @@ public class MarketController {
 		model.addAttribute("goodsDetailList", goodsDetailDOs);
 		model.addAttribute("pageable", pageable);
 		model.addAttribute("categoryTree", categoryTree);
+		if (categoryId != null) {
+			List<CategoryVO> categoryViews = categoryService.queryCategoryTree(categoryId);
+			List<CategoryVO> revertView = new ArrayList<CategoryVO>();
+			for(int i=0, size=categoryViews.size(); i< size; i++) {
+				revertView.add(categoryViews.get(size - (i + 1)));
+			}
+			model.addAttribute("cateoryViewList", revertView);
+		}
 	}
 
 	@RequestMapping(value = { UrlUtil.MARKET_GOODS_SHOW }, method = RequestMethod.GET)

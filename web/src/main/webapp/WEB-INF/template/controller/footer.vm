@@ -1,0 +1,41 @@
+<div class="footer">
+	<div class="row">
+		<div class="column footer-item">
+			<div class="footer-item-title">团队</div>
+			<ul>
+				<li>关于我们</li>
+				<li>联系我们</li>
+			</ul>
+		</div>
+		<div class="column footer-item">
+			<div class="footer-item-title">手机版本</div>
+			<ul>
+				<li>Android版本</li>
+				<li>IOS版本</li>
+			</ul>
+		</div>
+		<div class="column footer-item qcode">
+			<div>二维码</div>
+			<div style="margin-top:2px;"><img src="$urlUtil.getStaticServer()/img/buyibushe.png" width="80" height="80"></div>
+		</div>
+		<div class="column footer-item">
+			<div class="footer-item-title">
+				关注我们
+			</div>
+			<ul>
+				<li>新浪微博</li>
+				<li>QQ空间</li>
+			</ul>
+		</div>
+		<div class="column footer-item">
+			<div class="footer-item-title">网站建设</div>
+			<ul>
+				<li>帮助</li>
+				<li>客服联系</li>
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+			<div class="copy-right">布艺布舍 Copyright © 2009-2014 www.buyibushe.com All Rights Reserved. ICP证：辽ICP备12008583号</div>
+	</div>
+</div>

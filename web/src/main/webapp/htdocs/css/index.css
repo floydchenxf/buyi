@@ -313,3 +313,25 @@ ul {
 	list-style:none;
 	text-align:left;
 }
+
+body {
+	font-size:14px;
+}
+
+a {
+	color: #669999;
+	text-decoration: none;
+	outline: 0;
+	cursor: pointer;
+}
+
+a:visited {color: #669999; outline: 0;}
+
+a:hover {
+	cursor: pointer;
+	color: #669999;
+	/*text-decoration: underline;*/
+	text-decoration: none;
+}
+
+a:active {color: #669999;}

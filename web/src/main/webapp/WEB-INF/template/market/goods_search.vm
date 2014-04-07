@@ -1,52 +1,79 @@
 <html>
 <head>
 	<title>华强布艺商城</title>
-	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/base.css" />
+	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/index.css" />
 	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/skeleton.css" />
 	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/goods-search.css" />
-    <script src="$urlUtil.getStaticServer()/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+	<script src="$urlUtil.getStaticServer()/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+	<script>
+	    $(function () {
+			$('#search-goods').click(function() { 
+				var searchText = $('.search-text').val();
+				if (searchText.trim() == '') {
+					alert('请输入商品名称!');
+					return false;
+				}
+				
+				$('#search-form').submit();
+			});
+	    });
+    </script>
 </head>
 <body class="container">
-	<div class="w8">
-		$controller.setTemplate('controller/goods_category.vm').setParameter('categoryTree',$categoryTree)
+	$controller.setTemplate('controller/header.vm').setParameter('paramsTool', $paramsTool)
+	<div class="row">
+		$controller.setTemplate('controller/category_tree.vm').setParameter('cateoryViewList', $cateoryViewList)
 	</div>
-	<div class="w24">	
-		#if($goodsDetailList && $goodsDetailList.size() > 0)
-			#set($i=0)
-			#foreach($goodsDetail in $goodsDetailList)
-				#if($i%3==0)
-					<div class="row">
-				#end
-				<div class="column alpha omega">		
-					<div class="goods-item">
-						
-						<div class="goods-img">
-							<a href="$urlUtil.MARKET_GOODS_SHOW.pm('id',$!goodsDetail.id)" target="_blank">
-								<img src="$urlUtil.getSearchImagePath($goodsDetail.goodsPic1)">
-							</a>
+	<div class="row">
+		<div class="w8 alpha">
+			$controller.setTemplate('controller/category_list.vm').setParameter('categorys',$categoryTree)
+		</div>
+		<div class="w24 omega">	
+			#if($goodsDetailList && $goodsDetailList.size() > 0)
+				#set($i=0)
+				#foreach($goodsDetail in $goodsDetailList)
+					#if($i%3==0)
+						<div class="row">
+					#end
+					
+					#if($i%3 == 0)
+						<div class="w8 alpha">	
+					#elseif($i%3 == 1)
+						<div class="w8">	
+					#else
+						<div class="w8 omega">	
+					#end
+						<div class="goods-item">
+							<div class="goods-img">
+								<a href="$urlUtil.MARKET_GOODS_SHOW.pm('id',$!goodsDetail.id)" target="_blank">
+									<img src="$urlUtil.getSearchImagePath($goodsDetail.goodsPic1)">
+								</a>
+							</div>
+							
+							<a href="$urlUtil.MARKET_GOODS_SHOW.pm('id',$!goodsDetail.id)" target="_blank"><div class="goods-title">$!goodsDetail.title</div></a>
+							<div class="goods-price">$!goodsDetail.originPrice</div>
+							<div>$!goodsDetail.getPostfeeVO().getPostInfo()</div>
 						</div>
-						
-						<a href="$urlUtil.MARKET_GOODS_SHOW.pm('id',$!goodsDetail.id)" target="_blank"><div class="goods-title">$!goodsDetail.title</div></a>
-						<div class="goods-price">$!goodsDetail.originPrice</div>
-						<div>$!goodsDetail.getPostfeeVO().getPostInfo()</div>
 					</div>
-				</div>
-								
-				#if($i%3 == 2 || $i + 1== $goodsDetailList.size())
-					</div>
+									
+					#if($i%3 == 2 || $i + 1== $goodsDetailList.size())
+						</div>
+					#end
+					#set($i=$i+1)
 				#end
-				#set($i=$i+1)
-			#end
-			
-			#set($pageUrl='')
-			#if($!paramsTool.q || $!paramsTool.c)
-				#set($pageUrl=$urlUtil.MARKET_GOODS_SEARCH.pm('q',$!paramsTool.q).pm('c',$!paramsTool.c).render())
+				
+				#set($pageUrl='')
+				#if($!paramsTool.q || $!paramsTool.c)
+					#set($pageUrl=$urlUtil.MARKET_GOODS_SEARCH.pm('q',$!paramsTool.q).pm('c',$!paramsTool.c).render())
+				#else
+					#set($pageUrl=${urlUtil.MARKET_GOODS_SEARCH}+'?')
+				#end
+				<div class="row">$controller.setTemplate('controller/paginator.vm').setParameter('pageUrl',$!pageUrl).setParameter('pageable',$!pageable)</div>
 			#else
-				#set($pageUrl=${urlUtil.MARKET_GOODS_SEARCH}+'?')
+				<div class="no-record">没找到相关布匹</div>
 			#end
-	
-			<div class="row">$controller.setTemplate('controller/paginator.vm').setParameter('pageUrl',$!pageUrl).setParameter('pageable',$!pageable)</div>
-		#end
+		</div>
 	</div>
+	$controller.setTemplate('controller/footer.vm')
 </body>
 </html>

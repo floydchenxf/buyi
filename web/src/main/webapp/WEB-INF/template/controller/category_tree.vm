@@ -1,0 +1,11 @@
+#if($cateoryViewList && $cateoryViewList.size() > 0)
+	#set($i = 0)
+	#set($size = $cateoryViewList.size())
+	<div class="current-category">
+	当前类目: 
+	#foreach($categoryView in $cateoryViewList)
+		<a href="$urlUtil.MARKET_GOODS_SEARCH.pm('c',$categoryView.id)">$categoryView.categoryName</a>#if($i + 1 < $size) >> #end
+		#set($i=$i+1)
+	#end
+	</div>
+#end

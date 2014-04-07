@@ -1,0 +1,29 @@
+<div class="row">
+	<div class="category-title">
+		商品类目分类
+	</div>
+	#foreach($category in $categorys)
+		<div class="category-item" data-item="$category.id">
+			<a href="$urlUtil.MARKET_GOODS_SEARCH.pm('c', $category.id)">
+				<div>$category.categoryName</div>
+			</a>
+			#set($subCategorys = $category.subCategorys)
+			#set($size =$subCategorys.size())
+			<div class="subCategory" id="subCategory$category.id">
+				#set($i = 0)
+				#foreach($subCategory in $subCategorys)
+					<a href="$urlUtil.MARKET_GOODS_SEARCH.pm('c', $subCategory.id)">
+					#if($i==0)
+							<div class="subcategory-first">$subCategory.categoryName</div>
+					#elseif($size == $i + 1)
+							<div class="subcategory-end">$subCategory.categoryName</div>
+					#else
+							<div class="subcategory-middle">$subCategory.categoryName</div>
+					#end
+					</a>
+					#set($i=$i+1)
+				#end
+			</div>
+		</div>
+	#end
+</div>

@@ -1,6 +1,8 @@
+.search-content {
+	width:720px;
+}
 .goods-item {
-	width:230px;
-	padding:0 5px 5px 0;
+	margin-bottom:10px;
 }
 
 .goods-img {
@@ -9,9 +11,8 @@
 	font-size:0px;
 	vertical-align: middle;
 	border:1px solid #eee;
-	width:210px;
+	width:230px;
 	height:200px;
-	margin:5px 5px 0 5px;
 }
 
 .goods-img:hover {
@@ -46,11 +47,14 @@
 	background-color:#efefef;
 }
 
-.category-tree {
-	border:1px solid #efefef;
+.no-record {
+	width:710px;
+	height:450px;
+	line-height:450px;
+	border:1px solid #f1f1f1;
+	text-align:center;
 }
-.category-name {
-	font-size:16px;
-	padding-left:10px;
-	line-height:30px;
+
+.current-category {
+	line-height:36px;
 }

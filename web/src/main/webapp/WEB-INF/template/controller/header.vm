@@ -1,0 +1,18 @@
+#set($searchKey = $!paramsTool.q)
+<div class="row page-head">
+	<div class="logo">
+		<a href="$urlUtil.MARKET_INDEX"><img src="$urlUtil.getStaticServer()/img/logo.png"></a>
+	</div>
+	<div class="search">
+		<div class="searchForm">
+		<form name="searchForm" id="search-form" action="$urlUtil.MARKET_GOODS_SEARCH" method="get" target="_blank">
+			<input type="text" name="q" value="$!searchKey" class="search-text" onkeydown="javascript:if(event.keyCode==13) search('key');">
+			<input type="button" value="搜索" class="button" id="search-goods">
+		</form>
+		</div>
+	</div>
+	<div class="login">
+		<a class="linked" href="#"><div class="mybushe">我的布舍</div></a>
+		<a class="linked" href="#"><div class="reg-user">注册</div></a>
+	</div>
+</div>
