@@ -36,15 +36,26 @@
 	width:285px;
 	height:34px;
 	line-height:34px;
-    	border:none;
+    border:none;
 	float:left;
-	padding-left: 6px;
-	outline:medium;
+	padding: 0 6px;
+	margin:0px;
+	outline:none;
+	background-color:transparent;
+	box-shadow:none;
 }
 
-input[type="button"] {
-	padding: 0px;
-	border: none;
+.search .search-text:focus {
+	width:285px;
+	height:34px;
+	line-height:34px;
+    border:0;
+	float:left;
+	padding: 0 6px;
+	margin:0px;
+	outline:none;
+	box-shadow:none;
+	background-color:transparent;
 }
 
 .search .button {
@@ -54,11 +65,18 @@ input[type="button"] {
 	width:100px;
 	height:36px;
 	float:right;
+	border:0px;
+	margin:0px;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
 }
 
 .search .button:hover {
 	border:0px;
 	margin:0px;
+	background: #f672ac;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
 }
 
 .login {
@@ -97,27 +115,6 @@ input[type="button"] {
 	background-position: -116px -27px;
 	background-color:#f7f7f7;
 	height:24px;
-}
-
-a.linked {
-	color: #000000;
-	cursor: pointer;
-	text-decoration: none;
-}
-
-a.linked:hover {
-	text-decoration: none;
-	color: #000000;
-	cursor: pointer;
-}
-
-a.linked:visited {
-	color: #000000; 
-	outline: 0;
-}
-
-a.linked:active {
-	color: #000000
 }
 
 .border {
@@ -159,11 +156,6 @@ a.linked:active {
 	border-bottom:1px solid #f1f1f1;
 	border-right:none;
 	background-color:#ffffff;
-}
-
-.category-item a {
-	color:#000000;
-	text-decoration: none;
 }
 
 .category-item.selected {
@@ -292,6 +284,11 @@ a.linked:active {
 	font-size:14px;
 }
 
+.footer-item-content {
+	text-indent:40px;
+	font-size:14px;
+}
+
 .qcode {
 	text-align:center;
 	font-size:14px;
@@ -302,36 +299,3 @@ a.linked:active {
 	font-size:12px;
 	line-height:30px;
 }
-
-li {
-	margin:0; 
-	padding:0; 
-	line-height:24px;
-}
-
-ul {	
-	list-style:none;
-	text-align:left;
-}
-
-body {
-	font-size:14px;
-}
-
-a {
-	color: #669999;
-	text-decoration: none;
-	outline: 0;
-	cursor: pointer;
-}
-
-a:visited {color: #669999; outline: 0;}
-
-a:hover {
-	cursor: pointer;
-	color: #669999;
-	/*text-decoration: underline;*/
-	text-decoration: none;
-}
-
-a:active {color: #669999;}

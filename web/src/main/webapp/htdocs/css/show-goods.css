@@ -30,12 +30,14 @@
 }
 
 .goods-line {
-	height:30px;
+	height:20px;
 }
 
 .goods-desc {
 	border:1px solid #ddd;
-	padding:0 30px;
+	width:890px;
+	padding:10px 30px;
+	min-height:300px;
 }
 
 .tiny-image {

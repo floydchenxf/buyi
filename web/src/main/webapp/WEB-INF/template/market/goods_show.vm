@@ -1,8 +1,9 @@
 <html>
 <head>
 	<title>华强布艺商城</title>
-	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/skeleton.css" />
+	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/index.css" />
 	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/base.css" />
+	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/skeleton.css" />
 	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/show-goods.css" />
 	<script type="text/javascript" src="$urlUtil.getStaticServer()/js/jquery-1.7.1.js"></script>
 	<script src="$urlUtil.getStaticServer()/js/plugin.js" type="text/javascript"></script>
@@ -48,130 +49,141 @@
 					}
 					
 				});
+				
+				$('#search-goods').click(function() { 
+					var searchText = $('.search-text').eq(0).val() ;
+					if ($.trim(searchText) == '') {
+						alert('请输入商品名称!');
+					} else {
+						$('#search-form').submit();
+					}
+				});
 			}
 		);
 	</script>
-</title>
+</head>
 <body>
 	<div class="container">
-		<div class="w12">
-			<div class="row img-preview">
-				<a href='$urlUtil.getBigImagePath($goodsDetail.goodsPic1)' target='_blank'><img src="$urlUtil.getSmallImagePath($goodsDetail.goodsPic1)"></a>
-			</div>
-			<div class="row">
-				<div class="tiny-image" id="tiny-image-1">
-					<div class="box">
-					<img src="$urlUtil.getTinyImagePath($goodsDetail.goodsPic1)">
-					</div>
+		$controller.setTemplate('controller/header.vm').setParameter('paramsTool', $paramsTool)
+		<div class="row">
+			<div class="w12 alpha">
+				<div class="row img-preview">
+					<a href='$urlUtil.getBigImagePath($goodsDetail.goodsPic1)' target='_blank'>
+					<img src="$urlUtil.getSmallImagePath($goodsDetail.goodsPic1)"></a>
 				</div>
-				#if($goodsDetail.goodsPic2)
-					<div class="tiny-image" id="tiny-image-2">
-						<div class="box">
-						<img src="$urlUtil.getTinyImagePath($goodsDetail.goodsPic2)">
-						</div>
-					</div>
-				#end
-				#if($goodsDetail.goodsPic3)
-					<div class="tiny-image" id="tiny-image-3">
-						<div class="box">
-						<img src="$urlUtil.getTinyImagePath($goodsDetail.goodsPic3)">
-						</div>
-					</div>
-				#end
-			</div>
-		</div>
-		<div class="w20">
-			<div class="row goods-title">
-				<div class="column alpha">$goodsDetail.title</div>
-			</div>
-			<div class="goods-info">
 				<div class="row">
-					<div class="row goods-item">
-						<div class="column alpha">价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格：</div>
-						<div class="column"><span class="goods-price">$goodsDetail.originPrice</span></div>
+					<div class="tiny-image" id="tiny-image-1">
+						<div class="box">
+						<img src="$urlUtil.getTinyImagePath($goodsDetail.goodsPic1)">
+						</div>
 					</div>
-					<div class="row goods-item">
-					#set($postVO = $!goodsDetail.getPostfeeVO())
-					<div class="column alpha">运&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;费：</div>
-					<div class="column">$postVO.getPostInfo()</div>
-					</div>
-					<div class="row goods-item">
-						<div class="column alpha">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</div>
-						<div class="column">浙江桐乡</div>
-					</div>
-					#*
-					#if($categoryList) 
-						#set($size=$categoryList.size())
-						#set($i=0)
-						<div class="row goods-item">
-							<div class="column alpha">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目：</div>
-							<div class="column">
-								#foreach($category in $categoryList)
-									#if($i+1==$size)${category.categoryName}#else${category.categoryName}-->#end
-									#set($i=$i+1)
-								#end
+					#if($goodsDetail.goodsPic2)
+						<div class="tiny-image" id="tiny-image-2">
+							<div class="box">
+							<img src="$urlUtil.getTinyImagePath($goodsDetail.goodsPic2)">
 							</div>
 						</div>
 					#end
-					*#
+					#if($goodsDetail.goodsPic3)
+						<div class="tiny-image" id="tiny-image-3">
+							<div class="box">
+							<img src="$urlUtil.getTinyImagePath($goodsDetail.goodsPic3)">
+							</div>
+						</div>
+					#end
+				</div>
+			</div>
+			
+			<div class="w20">
+				<div class="row goods-title">
+					<div class="column alpha">$goodsDetail.title</div>
+				</div>
+				<div class="goods-info">
 					<div class="row">
-						<div class="column alpha">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：</div>
-						<div class="column">
-						#if($goodsTypes.size()>0)
-							#set($i = 0)
-							#foreach($goodsType in $goodsTypes)
-								#if($i%9 == 0) 
-									<div class="row goods-type-row">
-								#end
-							
-								<div class="goods-type-pic hover-show">
-									<div class="goods-type-item" id="$goodsType.id" data-item-small="$urlUtil.getSmallImagePath($goodsType.picName)" data-item-big="$urlUtil.getBigImagePath($goodsType.picName)">
-										<img src="$urlUtil.getTinyImagePath($goodsType.picName)">
-									</div>
-									<div>$goodsType.typeName</div>
+						<div class="row goods-item">
+							<div class="column alpha">价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格：</div>
+							<div class="column"><span class="goods-price">$goodsDetail.originPrice</span></div>
+						</div>
+						<div class="row goods-item">
+							#set($postVO = $!goodsDetail.getPostfeeVO())
+							<div class="column alpha">运&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;费：</div>
+							<div class="column">$postVO.getPostInfo()</div>
+						</div>
+						<div class="row goods-item">
+							<div class="column alpha">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</div>
+							<div class="column">浙江桐乡</div>
+						</div>
+						#*
+						#if($categoryList) 
+							#set($size=$categoryList.size())
+							#set($i=0)
+							<div class="row goods-item">
+								<div class="column alpha">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目：</div>
+								<div class="column">
+									#foreach($category in $categoryList)
+										#if($i+1==$size)${category.categoryName}#else${category.categoryName}-->#end
+										#set($i=$i+1)
+									#end
 								</div>
-								
-								#if($i + 1 == $goodsTypes.size())
-									</div>
-								#end
-								
-								#if($i%9==8)
-									</div>
-								#end
-								
-								#set($i = $i+1)
-							#end
+							</div>
 						#end
+						*#
+						<div class="row">
+							<div class="column alpha">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：</div>
+							<div class="column">
+							#if($goodsTypes.size()>0)
+								#set($i = 0)
+								#foreach($goodsType in $goodsTypes)
+									#if($i%9 == 0) 
+										<div class="row goods-type-row">
+									#end
+								
+									<div class="goods-type-pic hover-show">
+										<div class="goods-type-item" id="$goodsType.id" data-item-small="$urlUtil.getSmallImagePath($goodsType.picName)" data-item-big="$urlUtil.getBigImagePath($goodsType.picName)">
+											<img src="$urlUtil.getTinyImagePath($goodsType.picName)">
+										</div>
+										<div>$goodsType.typeName</div>
+									</div>
+									
+									#if($i + 1 == $goodsTypes.size())
+										</div>
+									#end
+									
+									#if($i%9==8)
+										</div>
+									#end
+									
+									#set($i = $i+1)
+								#end
+							#end
+							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="column alpha">
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						</div>
-						<div class="column">
-							<a href="http://amos.im.alisoft.com/msg.aw?v=2&uid=zjutcxf128&site=cntaobao&s=2&charset=utf-8" class="button" target="_blank">联系旺旺</a>
-						</div>
-						<div class="column">
-							<a href="#" class="button" target="_blank">立刻购买</a>
-						</div>
-						<div class="column">
-							<a href="#" class="button" target="_blank">放入购物车</a>
+						<div class="row">
+							<div class="column alpha">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
+							<div class="column">
+								<a href="http://amos.im.alisoft.com/msg.aw?v=2&uid=zjutcxf128&site=cntaobao&s=2&charset=utf-8" class="button" target="_blank">联系旺旺</a>
+							</div>
+							<div class="column">
+								<a href="#" class="button" target="_blank">立刻购买</a>
+							</div>
+							<div class="column">
+								<a href="#" class="button" target="_blank">放入购物车</a>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="container">
-		<div class="w32 goods-line">
+		<div class="row goods-line">
 		</div>
-	</div>
-	<div class="container">
-		<div class="w32">
+		<div class="row">
 			<div class="goods-desc">
 				$goodsDetail.goodsDesc
 			</div>
 		</div>
+		$controller.setTemplate('controller/footer.vm')
 	</div>
 </body>
 </html>

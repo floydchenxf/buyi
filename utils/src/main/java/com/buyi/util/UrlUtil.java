@@ -60,6 +60,7 @@ public class UrlUtil {
 	// 登陆相关---------------------------------------------
 	public static final String BUYI_LOGIN = "/sso/login";
 	public static final String BUYI_SIGNUP = "/sso/signup";
+	public static final String BINDING_QQ = "/bind/oauth_qq";
 
 	// 市场相关---------------------------------------------
 	public static final String MARKET_INDEX = "/market/index"; //首页

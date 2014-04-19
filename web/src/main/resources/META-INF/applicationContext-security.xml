@@ -8,25 +8,75 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
-	
-	<bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandlerEx">
-		<property name="defaultTargetUrl" value="/market/index"/>
-		<property name="alwaysUseDefaultTargetUrl" value="false"/>
+
+	<oauth2:client id="oauth2ClientFilter" token-provider-ref="accessTokenProviderChain" redirect-on-error="false">
+		<oauth2:url pattern="/bind/oauth_qq/**" resources="oauth_qq" />
+	</oauth2:client>
+	<oauth2:resource id="oauth_qq" type="authorization_code" client-id="100265533" client-secret="d037730b712bdfcc6c915a8e9b5e497f"
+		access-token-uri="https://graph.qq.com/oauth2.0/token?client_id=100265533&amp;client_secret=d037730b712bdfcc6c915a8e9b5e497f&amp;grant_type={grant_type}&amp;code={code}&amp;redirect_uri=http://localhost:8080/bind/oauth_qq"
+		scope="get_user_info,add_t,add_share"
+		user-authorization-uri="https://graph.qq.com/oauth2.0/authorize" />
+	<bean id="accessTokenProviderChain" class="org.springframework.security.oauth2.client.token.AccessTokenProviderChain">
+		<constructor-arg>
+			<list>
+				<bean
+					class="org.springframework.security.web.authentication.SdAuthorizationCodeAccessTokenProvider">
+					<property name="messageConverters">
+						<list>
+							<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+								<property name="supportedMediaTypes">
+									<list>
+										<bean class="org.springframework.http.MediaType">
+											<constructor-arg value="application"></constructor-arg>
+											<constructor-arg value="json"></constructor-arg>
+										</bean>
+										<!-- 这个是为sina加的fix -->
+										<bean class="org.springframework.http.MediaType">
+											<constructor-arg value="text"></constructor-arg>
+											<constructor-arg value="plain"></constructor-arg>
+										</bean>
+									</list>
+								</property>
+							</bean>
+						</list>
+					</property>
+					<property name="methodMap">
+						<map>
+							<entry key="oauth_qq" value="GET"/>
+						</map>
+					</property>
+				</bean>
+				<bean class="org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsAccessTokenProvider"></bean>
+			</list>
+		</constructor-arg>
 	</bean>
-	
+
+	<bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandlerEx">
+		<property name="defaultTargetUrl" value="/market/index" />
+		<property name="alwaysUseDefaultTargetUrl" value="false" />
+	</bean>
+
 	<security:http pattern="/!s/**" security="none" />
 	<security:http pattern="/*.ico" security="none" />
 	<security:http pattern="/*.png" security="none" />
-	
+
+	<!-- oauth认证 -->
+	<security:http auto-config="false" pattern="/bind/**">
+		<security:anonymous enabled="false" />
+		<security:custom-filter ref="oauth2ClientFilter" after="EXCEPTION_TRANSLATION_FILTER" />
+		<security:form-login login-page="/binding/_ended" />
+	</security:http>
+
 	<!-- 默认验证 -->
 	<security:http auto-config="false" disable-url-rewriting="true">
-		<security:intercept-url pattern="/sso/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-		<security:intercept-url pattern="/market/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<security:intercept-url pattern="/sso/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<security:intercept-url pattern="/market/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<security:intercept-url pattern="/buyer/**" requires-channel="http" access="ROLE_ADMIN,ROLE_NORMAL" />
 		<security:intercept-url pattern="/managerment/**" requires-channel="http" access="ROLE_ADMIN" />
 		<security:form-login login-page="/sso/login" login-processing-url="/sso/login_check" username-parameter="uname"
-		password-parameter="pwd" authentication-failure-url="/sso/login?error=%E8%B4%A6%E5%8F%B7%E4%B8%8D%E5%AD%98%E5%9C%A8%E6%88%96%E5%AF%86%E7%A0%81%E9%94%99%E8%AF%AF%EF%BC%8C%E8%AF%B7%E9%87%8D%E8%AF%95"
-		authentication-success-handler-ref="authenticationSuccessHandler"/>
+			password-parameter="pwd"
+			authentication-failure-url="/sso/login?error=%E8%B4%A6%E5%8F%B7%E4%B8%8D%E5%AD%98%E5%9C%A8%E6%88%96%E5%AF%86%E7%A0%81%E9%94%99%E8%AF%AF%EF%BC%8C%E8%AF%B7%E9%87%8D%E8%AF%95"
+			authentication-success-handler-ref="authenticationSuccessHandler" />
 		<security:logout logout-success-url="/joke/joke_show" logout-url="/member/logout" delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE" />
 		<security:session-management session-authentication-error-url="/!s/401.html" session-fixation-protection="migrateSession">
 			<security:concurrency-control max-sessions="6" error-if-maximum-exceeded="true" />
