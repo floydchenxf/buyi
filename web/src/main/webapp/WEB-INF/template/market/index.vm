@@ -1,6 +1,7 @@
 <html>
 <head>
 	<title>华强布艺商城</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=8" /> 
 	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/skeleton.css" />
 	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/base.css" />
 	<link rel="stylesheet" href="$urlUtil.getStaticServer()/css/index.css" />
